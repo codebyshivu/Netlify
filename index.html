@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en" data-theme="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Jinendra Vani Backend Dashboard">
+  <title>Jinendra Vani — Backend Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div id="offlineBar" class="network-bar hidden" role="status" aria-live="polite"><span class="network-dot"></span> Offline — network operations are disabled</div>
+
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-card">
+      <div class="brand-mark" aria-hidden="true"><span>JV</span></div>
+      <p class="eyebrow">Jinendra Vani</p>
+      <h1>Backend Dashboard</h1>
+      <p class="auth-copy">Secure administration for questions, reports and users.</p>
+      <form id="loginForm" novalidate>
+        <label class="field-label" for="loginEmail">Admin email</label>
+        <input id="loginEmail" name="email" type="email" autocomplete="username" required placeholder="admin@example.com">
+        <label class="field-label" for="loginPassword">Password</label>
+        <div class="password-wrap"><input id="loginPassword" name="password" type="password" autocomplete="current-password" required placeholder="••••••••"><button type="button" class="icon-button password-toggle" data-target="loginPassword" aria-label="Show password"></button></div>
+        <button id="loginButton" class="btn btn-primary btn-block" type="submit"><span>Sign in</span></button>
+        <p id="loginError" class="form-error" role="alert"></p>
+      </form>
+      <p class="security-note">Admin access is enforced by Firebase Authentication and should also be restricted by Firebase Security Rules.</p>
+      <button id="openSetupFromLogin" class="text-button" type="button">Firebase setup</button>
+    </div>
+  </div>
+
+  <div id="setupScreen" class="setup-screen hidden">
+    <div class="setup-card">
+      <div class="brand-line"><div class="brand-mark small"><span>JV</span></div><div><strong>Jinendra Vani</strong><span>Backend Dashboard</span></div></div>
+      <h1>Connect your services</h1>
+      <p class="muted">The dashboard contains no production Firebase credentials or backend URL. Add your project configuration locally in this browser.</p>
+      <form id="setupForm" novalidate>
+        <div class="section-divider"><span>Firebase Web Configuration</span></div>
+        <label class="field-label" for="firebaseConfigInput">Firebase config JSON</label>
+        <textarea id="firebaseConfigInput" class="code-input" rows="9" spellcheck="false" placeholder='{
+  "apiKey": "...",
+  "authDomain": "...",
+  "databaseURL": "https://...",
+  "projectId": "...",
+  "storageBucket": "...",
+  "messagingSenderId": "...",
+  "appId": "..."
+}'></textarea>
+        <div class="setup-grid">
+          <div><label class="field-label" for="setupUsersPath">Users path</label><input id="setupUsersPath" value="users" placeholder="users"></div>
+          <div><label class="field-label" for="setupQuestionsPath">Questions path</label><input id="setupQuestionsPath" value="questions" placeholder="questions"></div>
+          <div><label class="field-label" for="setupReportsPath">Reports path</label><input id="setupReportsPath" value="reports" placeholder="reports"></div>
+          <div><label class="field-label" for="setupActivityPath">Activity path</label><input id="setupActivityPath" value="activity" placeholder="activity"></div>
+        </div>
+        <label class="switch-row"><input id="setupRequireAdmin" type="checkbox" checked><span class="switch-ui"></span><span><strong>Require Firebase admin claim</strong><small>Recommended. Your signed-in user must have the custom claim <code>admin: true</code>.</small></span></label>
+        <div class="setup-actions"><button class="btn btn-primary" type="submit">Save &amp; continue</button><button id="setupDemoReset" class="btn btn-secondary" type="button">Clear local setup</button></div>
+        <p id="setupError" class="form-error" role="alert"></p>
+      </form>
+    </div>
+  </div>
+
+  <div id="appShell" class="app-shell hidden">
+    <aside id="sidebar" class="sidebar" aria-label="Primary navigation">
+      <div class="sidebar-top">
+        <div class="brand-line"><div class="brand-mark small"><span>JV</span></div><div class="brand-copy"><strong>Jinendra Vani</strong><span>Backend Dashboard</span></div></div>
+        <button id="sidebarClose" class="icon-button mobile-only" aria-label="Close navigation"></button>
+      </div>
+      <nav id="nav" class="nav-list">
+        <button class="nav-item active" data-section="dashboard"><span class="nav-icon icon-grid"></span><span>Dashboard</span></button>
+        <button class="nav-item" data-section="questions"><span class="nav-icon icon-help"></span><span>Spiritual Questions</span><span id="questionsNavCount" class="nav-count hidden"></span></button>
+        <button class="nav-item" data-section="reports"><span class="nav-icon icon-report"></span><span>Reports</span><span id="reportsNavCount" class="nav-count hidden"></span></button>
+        <button class="nav-item" data-section="users"><span class="nav-icon icon-users"></span><span>Users</span></button>
+        <button class="nav-item" data-section="settings"><span class="nav-icon icon-settings"></span><span>Settings</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="service-status"><span id="serviceDot" class="status-dot"></span><div><strong id="serviceStatusText">Checking services</strong><small id="serviceStatusSub">—</small></div></div>
+        <button id="signOutButton" class="nav-item signout"><span class="nav-icon icon-logout"></span><span>Sign out</span></button>
+      </div>
+    </aside>
+
+    <div id="sidebarBackdrop" class="sidebar-backdrop hidden"></div>
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-left"><button id="menuButton" class="icon-button mobile-only" aria-label="Open navigation"></button><div><p id="sectionEyebrow" class="eyebrow">Overview</p><h1 id="pageTitle">Dashboard</h1></div></div>
+        <div class="topbar-actions"><div class="online-pill"><span id="onlineDot" class="network-dot"></span><span id="onlineText">Online</span></div><button id="themeCycle" class="icon-button" aria-label="Change theme" title="Theme"></button><button id="refreshButton" class="icon-button" aria-label="Refresh current section" title="Refresh"></button><div class="avatar-menu"><button id="profileButton" class="avatar" aria-haspopup="true" aria-expanded="false">A</button><div id="profilePopover" class="popover hidden"><strong id="profileEmail">Admin</strong><small id="profileUid">—</small><button id="profileSignOut" class="popover-action">Sign out</button></div></div></div>
+      </header>
+
+      <section id="content" class="content" tabindex="-1">
+        <div id="dashboardSection" class="page-section active"></div>
+        <div id="questionsSection" class="page-section"></div>
+        <div id="reportsSection" class="page-section"></div>
+        <div id="usersSection" class="page-section"></div>
+        <div id="settingsSection" class="page-section"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="modalRoot"></div>
+  <div id="toastRoot" class="toast-root" aria-live="polite" aria-atomic="true"></div>
+  <div id="globalLoader" class="global-loader hidden"><div class="spinner"></div><span>Working…</span></div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
