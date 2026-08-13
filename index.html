@@ -1,108 +1,6455 @@
-<!doctype html>
-<html lang="en" data-theme="system">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="color-scheme" content="light dark">
-  <meta name="description" content="Jinendra Vani Backend Dashboard">
-  <title>Jinendra Vani — Backend Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#d50000">
+<meta name="description" content="Jinendra Vani Backend Dashboard">
+<title>Jinendra Vani — Backend Dashboard</title>
+
+<style>
+:root{
+  --primary:#d50000;
+  --primary-dark:#a90000;
+  --gold:#c9952e;
+  --bg:#f5f6f8;
+  --surface:#ffffff;
+  --surface-2:#f8f9fb;
+  --text:#17191d;
+  --muted:#737984;
+  --border:#e4e7eb;
+  --danger:#d92d20;
+  --success:#16803c;
+  --warning:#a15c00;
+  --info:#2563eb;
+  --sidebar:#111318;
+  --sidebar-text:#d9dce2;
+  --sidebar-muted:#9297a2;
+  --shadow:0 10px 30px rgba(16,24,40,.07);
+  --radius:18px;
+  --transition:180ms ease;
+}
+
+[data-theme="dark"]{
+  --bg:#0c0e12;
+  --surface:#15181d;
+  --surface-2:#1b1f25;
+  --text:#f3f4f6;
+  --muted:#969da8;
+  --border:#292e36;
+  --sidebar:#090a0d;
+  --sidebar-text:#e7e9ed;
+  --sidebar-muted:#858b96;
+  --shadow:0 14px 35px rgba(0,0,0,.28);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+button,
+input,
+textarea,
+select{
+  -webkit-tap-highlight-color:transparent;
+}
+
+:focus-visible{
+  outline:3px solid rgba(213,0,0,.25);
+  outline-offset:2px;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.app{
+  min-height:100vh;
+}
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+.auth-screen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background:
+    radial-gradient(circle at 15% 15%,rgba(213,0,0,.08),transparent 30%),
+    radial-gradient(circle at 85% 80%,rgba(201,149,46,.08),transparent 30%),
+    var(--bg);
+}
+
+.auth-card{
+  width:min(430px,100%);
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:26px;
+  padding:30px;
+  box-shadow:var(--shadow);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.brand-mark{
+  width:48px;
+  height:48px;
+  border-radius:15px;
+  background:var(--primary);
+  color:white;
+  display:grid;
+  place-items:center;
+  font-weight:800;
+  font-size:20px;
+  box-shadow:0 8px 20px rgba(213,0,0,.25);
+}
+
+.brand-name{
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:-.3px;
+}
+
+.brand-sub{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+.auth-title{
+  margin:30px 0 8px;
+  font-size:30px;
+  letter-spacing:-1px;
+}
+
+.auth-description{
+  margin:0 0 25px;
+  color:var(--muted);
+  line-height:1.55;
+}
+
+.field{
+  margin-bottom:16px;
+}
+
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.field input,
+.field textarea,
+.field select{
+  width:100%;
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  border-radius:13px;
+  padding:13px 14px;
+  min-height:48px;
+  transition:border var(--transition),box-shadow var(--transition);
+}
+
+.field textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 4px rgba(213,0,0,.08);
+  outline:none;
+}
+
+.field-hint{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:6px;
+  line-height:1.45;
+}
+
+.btn{
+  border:0;
+  min-height:46px;
+  border-radius:12px;
+  padding:0 16px;
+  font-weight:750;
+  transition:transform var(--transition),opacity var(--transition),background var(--transition);
+}
+
+.btn:active{
+  transform:scale(.98);
+}
+
+.btn-primary{
+  background:var(--primary);
+  color:#fff;
+}
+
+.btn-primary:hover{
+  background:var(--primary-dark);
+}
+
+.btn-secondary{
+  background:var(--surface-2);
+  color:var(--text);
+  border:1px solid var(--border);
+}
+
+.btn-danger{
+  background:var(--danger);
+  color:#fff;
+}
+
+.btn-ghost{
+  background:transparent;
+  color:var(--muted);
+}
+
+.btn-block{
+  width:100%;
+}
+
+.auth-error{
+  background:rgba(217,45,32,.08);
+  color:var(--danger);
+  border:1px solid rgba(217,45,32,.18);
+  padding:12px;
+  border-radius:12px;
+  margin-bottom:16px;
+  font-size:13px;
+  line-height:1.45;
+}
+
+/* =========================================================
+   SETUP
+========================================================= */
+
+.setup-screen{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  padding:30px 18px 60px;
+  background:var(--bg);
+}
+
+.setup-card{
+  width:min(760px,100%);
+  margin:auto;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:26px;
+  padding:26px;
+  box-shadow:var(--shadow);
+}
+
+.setup-card h1{
+  margin:24px 0 8px;
+  font-size:30px;
+  letter-spacing:-1px;
+}
+
+.setup-card p{
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.setup-status{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 14px;
+  border-radius:13px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  margin:18px 0 24px;
+  font-size:13px;
+}
+
+.status-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--muted);
+}
+
+.status-dot.online{
+  background:var(--success);
+}
+
+.status-dot.offline{
+  background:var(--danger);
+}
+
+/* =========================================================
+   MAIN LAYOUT
+========================================================= */
+
+.dashboard-layout{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:250px minmax(0,1fr);
+}
+
+.sidebar{
+  position:sticky;
+  top:0;
+  height:100vh;
+  background:var(--sidebar);
+  color:var(--sidebar-text);
+  padding:20px 14px;
+  display:flex;
+  flex-direction:column;
+  z-index:50;
+}
+
+.sidebar-brand{
+  padding:4px 9px 22px;
+}
+
+.sidebar-brand .brand-mark{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  font-size:17px;
+}
+
+.sidebar-brand .brand-name{
+  font-size:16px;
+}
+
+.sidebar-brand .brand-sub{
+  color:var(--sidebar-muted);
+}
+
+.nav{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.nav-label{
+  color:var(--sidebar-muted);
+  text-transform:uppercase;
+  letter-spacing:1.2px;
+  font-size:10px;
+  font-weight:800;
+  padding:15px 10px 7px;
+}
+
+.nav-btn{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  border:0;
+  color:var(--sidebar-text);
+  background:transparent;
+  padding:12px 11px;
+  border-radius:12px;
+  text-align:left;
+  font-weight:650;
+  font-size:13px;
+  transition:background var(--transition),color var(--transition);
+}
+
+.nav-btn:hover{
+  background:rgba(255,255,255,.06);
+}
+
+.nav-btn.active{
+  background:rgba(213,0,0,.18);
+  color:#fff;
+}
+
+.nav-icon{
+  width:20px;
+  height:20px;
+  flex:0 0 20px;
+  display:grid;
+  place-items:center;
+}
+
+.sidebar-bottom{
+  margin-top:auto;
+  border-top:1px solid rgba(255,255,255,.08);
+  padding-top:14px;
+}
+
+.main{
+  min-width:0;
+}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:30;
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:0 28px;
+  background:color-mix(in srgb,var(--surface) 92%,transparent);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+
+.topbar-left{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  min-width:0;
+}
+
+.mobile-menu{
+  display:none;
+}
+
+.page-title{
+  font-size:19px;
+  font-weight:800;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.page-subtitle{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:2px;
+}
+
+.topbar-right{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.network-status{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 10px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  font-size:11px;
+  color:var(--muted);
+}
+
+.network-status .status-dot{
+  width:7px;
+  height:7px;
+}
+
+.user-chip{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:6px 9px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  max-width:250px;
+}
+
+.avatar{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:var(--primary);
+  color:#fff;
+  display:grid;
+  place-items:center;
+  font-size:11px;
+  font-weight:800;
+}
+
+.user-email{
+  max-width:150px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:11px;
+  color:var(--muted);
+}
+
+.content{
+  padding:28px;
+  max-width:1700px;
+  margin:auto;
+}
+
+/* =========================================================
+   COMMON
+========================================================= */
+
+.section-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:18px;
+  margin-bottom:20px;
+}
+
+.section-header h1{
+  margin:0;
+  font-size:28px;
+  letter-spacing:-.8px;
+}
+
+.section-header p{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.section-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+
+.card-padding{
+  padding:20px;
+}
+
+.grid{
+  display:grid;
+  gap:15px;
+}
+
+.stats-grid{
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  margin-bottom:20px;
+}
+
+.stat-card{
+  padding:18px;
+  min-height:125px;
+}
+
+.stat-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.stat-icon{
+  width:39px;
+  height:39px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:rgba(213,0,0,.08);
+  color:var(--primary);
+}
+
+.stat-value{
+  font-size:27px;
+  font-weight:850;
+  margin-top:16px;
+  letter-spacing:-.8px;
+}
+
+.stat-label{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+.dashboard-grid{
+  grid-template-columns:minmax(0,1.5fr) minmax(300px,1fr);
+}
+
+.activity-list{
+  display:flex;
+  flex-direction:column;
+}
+
+.activity-item{
+  display:flex;
+  gap:12px;
+  padding:13px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.activity-item:last-child{
+  border-bottom:0;
+}
+
+.activity-dot{
+  width:9px;
+  height:9px;
+  margin-top:5px;
+  border-radius:50%;
+  background:var(--primary);
+  flex:0 0 9px;
+}
+
+.activity-text{
+  font-size:13px;
+  line-height:1.45;
+}
+
+.activity-time{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:3px;
+}
+
+.toolbar{
+  padding:15px;
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-bottom:14px;
+}
+
+.toolbar .search{
+  flex:1 1 230px;
+}
+
+.search{
+  position:relative;
+}
+
+.search input{
+  width:100%;
+  min-height:44px;
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  border-radius:11px;
+  padding:0 13px 0 40px;
+}
+
+.search-icon{
+  position:absolute;
+  left:13px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--muted);
+  pointer-events:none;
+}
+
+.toolbar select{
+  min-height:44px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:var(--surface);
+  color:var(--text);
+  padding:0 12px;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+.table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:760px;
+}
+
+.table th,
+.table td{
+  padding:14px 15px;
+  text-align:left;
+  border-bottom:1px solid var(--border);
+  font-size:12px;
+  vertical-align:middle;
+}
+
+.table th{
+  color:var(--muted);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  font-weight:800;
+  background:var(--surface-2);
+}
+
+.table tr:last-child td{
+  border-bottom:0;
+}
+
+.primary-text{
+  font-weight:700;
+}
+
+.muted{
+  color:var(--muted);
+}
+
+.truncate{
+  max-width:300px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:25px;
+  padding:0 9px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.badge-pending{
+  color:var(--warning);
+  background:rgba(245,158,11,.12);
+}
+
+.badge-reviewing{
+  color:var(--info);
+  background:rgba(37,99,235,.11);
+}
+
+.badge-resolved,
+.badge-active{
+  color:var(--success);
+  background:rgba(22,128,60,.11);
+}
+
+.badge-rejected,
+.badge-inactive{
+  color:var(--danger);
+  background:rgba(217,45,32,.11);
+}
+
+.badge-neutral{
+  color:var(--muted);
+  background:var(--surface-2);
+}
+
+.action-row{
+  display:flex;
+  justify-content:flex-end;
+  gap:6px;
+}
+
+.icon-btn{
+  width:36px;
+  height:36px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:var(--surface);
+  color:var(--muted);
+}
+
+.icon-btn:hover{
+  color:var(--text);
+  background:var(--surface-2);
+}
+
+.empty{
+  text-align:center;
+  padding:55px 20px;
+  color:var(--muted);
+}
+
+.empty-icon{
+  width:52px;
+  height:52px;
+  margin:0 auto 13px;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  background:var(--surface-2);
+  color:var(--muted);
+}
+
+.empty-title{
+  color:var(--text);
+  font-weight:800;
+  margin-bottom:5px;
+}
+
+.pagination{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:14px 16px;
+  border-top:1px solid var(--border);
+  font-size:11px;
+  color:var(--muted);
+}
+
+.pagination-actions{
+  display:flex;
+  gap:7px;
+}
+
+/* =========================================================
+   MOBILE CARDS
+========================================================= */
+
+.mobile-list{
+  display:none;
+}
+
+.mobile-record{
+  padding:16px;
+  border-bottom:1px solid var(--border);
+}
+
+.mobile-record:last-child{
+  border-bottom:0;
+}
+
+.mobile-record-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.mobile-record-title{
+  font-weight:800;
+  line-height:1.4;
+}
+
+.mobile-record-meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px;
+}
+
+.meta-label{
+  font-size:9px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.7px;
+  font-weight:800;
+}
+
+.meta-value{
+  font-size:11px;
+  margin-top:3px;
+  word-break:break-word;
+}
+
+.mobile-record-actions{
+  display:flex;
+  gap:8px;
+  margin-top:14px;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(5px);
+}
+
+.modal{
+  width:min(720px,100%);
+  max-height:min(90vh,900px);
+  overflow:auto;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:22px;
+  box-shadow:0 30px 80px rgba(0,0,0,.25);
+  animation:modalIn 160ms ease;
+}
+
+@keyframes modalIn{
+  from{
+    opacity:0;
+    transform:translateY(10px) scale(.985);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.modal-header{
+  position:sticky;
+  top:0;
+  z-index:2;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:18px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.modal-title{
+  font-size:18px;
+  font-weight:850;
+}
+
+.modal-body{
+  padding:20px;
+}
+
+.modal-footer{
+  position:sticky;
+  bottom:0;
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  padding:14px 20px;
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+}
+
+.confirm-modal{
+  width:min(430px,100%);
+}
+
+.confirm-icon{
+  width:48px;
+  height:48px;
+  border-radius:15px;
+  background:rgba(217,45,32,.1);
+  color:var(--danger);
+  display:grid;
+  place-items:center;
+  margin-bottom:14px;
+}
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+.settings-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+
+.settings-card{
+  padding:20px;
+}
+
+.settings-card h3{
+  margin:0 0 6px;
+  font-size:15px;
+}
+
+.settings-card > p{
+  margin:0 0 18px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+
+.config-status{
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--surface-2);
+  font-size:12px;
+  margin-bottom:14px;
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading-screen{
+  position:fixed;
+  inset:0;
+  z-index:300;
+  background:var(--bg);
+  display:grid;
+  place-items:center;
+}
+
+.loading-box{
+  text-align:center;
+  color:var(--muted);
+}
+
+.spinner{
+  width:30px;
+  height:30px;
+  border:3px solid var(--border);
+  border-top-color:var(--primary);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:0 auto 12px;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast-container{
+  position:fixed;
+  z-index:500;
+  right:18px;
+  bottom:18px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  width:min(370px,calc(100vw - 36px));
+}
+
+.toast{
+  background:var(--surface);
+  color:var(--text);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  border-radius:13px;
+  padding:13px 14px;
+  font-size:12px;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  animation:toastIn 180ms ease;
+}
+
+.toast.success{
+  border-left:4px solid var(--success);
+}
+
+.toast.error{
+  border-left:4px solid var(--danger);
+}
+
+.toast.warning{
+  border-left:4px solid var(--warning);
+}
+
+.toast.info{
+  border-left:4px solid var(--info);
+}
+
+@keyframes toastIn{
+  from{
+    opacity:0;
+    transform:translateY(7px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+/* =========================================================
+   DRAWER
+========================================================= */
+
+.drawer-backdrop{
+  display:none;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1100px){
+  .stats-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+
+  .dashboard-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:820px){
+  .dashboard-layout{
+    display:block;
+  }
+
+  .sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:270px;
+    transform:translateX(-105%);
+    transition:transform 200ms ease;
+    box-shadow:20px 0 50px rgba(0,0,0,.25);
+  }
+
+  .sidebar.open{
+    transform:none;
+  }
+
+  .drawer-backdrop{
+    position:fixed;
+    inset:0;
+    z-index:40;
+    background:rgba(0,0,0,.5);
+  }
+
+  .drawer-backdrop.open{
+    display:block;
+  }
+
+  .mobile-menu{
+    display:grid;
+    place-items:center;
+    width:40px;
+    height:40px;
+    border:1px solid var(--border);
+    border-radius:11px;
+    background:var(--surface);
+    color:var(--text);
+  }
+
+  .topbar{
+    padding:0 16px;
+  }
+
+  .content{
+    padding:20px 16px 35px;
+  }
+
+  .stats-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .section-header{
+    flex-direction:column;
+  }
+
+  .settings-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:620px){
+  .auth-card,
+  .setup-card{
+    padding:21px;
+    border-radius:21px;
+  }
+
+  .auth-title,
+  .setup-card h1{
+    font-size:25px;
+  }
+
+  .stats-grid{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .stat-card{
+    min-height:110px;
+    padding:14px;
+  }
+
+  .stat-value{
+    font-size:23px;
+  }
+
+  .network-status{
+    display:none;
+  }
+
+  .user-chip{
+    max-width:48px;
+    padding:5px;
+  }
+
+  .user-email{
+    display:none;
+  }
+
+  .content{
+    padding:17px 12px 30px;
+  }
+
+  .section-header h1{
+    font-size:24px;
+  }
+
+  .table-wrap{
+    display:none;
+  }
+
+  .mobile-list{
+    display:block;
+  }
+
+  .toolbar{
+    padding:12px;
+  }
+
+  .toolbar select{
+    flex:1 1 130px;
+  }
+
+  .modal-backdrop{
+    align-items:flex-end;
+    padding:0;
+  }
+
+  .modal{
+    max-height:94vh;
+    border-radius:22px 22px 0 0;
+    width:100%;
+  }
+
+  .modal-footer{
+    padding-bottom:calc(14px + env(safe-area-inset-bottom));
+  }
+
+  .section-actions{
+    width:100%;
+  }
+
+  .section-actions .btn{
+    flex:1;
+  }
+}
+
+@media(max-width:380px){
+  .stats-grid{
+    grid-template-columns:1fr;
+  }
+
+  .topbar{
+    height:64px;
+  }
+
+  .page-title{
+    font-size:16px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+}
+</style>
 </head>
+
 <body>
-  <div id="offlineBar" class="network-bar hidden" role="status" aria-live="polite"><span class="network-dot"></span> Offline — network operations are disabled</div>
 
-  <div id="authScreen" class="auth-screen">
-    <div class="auth-card">
-      <div class="brand-mark" aria-hidden="true"><span>JV</span></div>
-      <p class="eyebrow">Jinendra Vani</p>
-      <h1>Backend Dashboard</h1>
-      <p class="auth-copy">Secure administration for questions, reports and users.</p>
-      <form id="loginForm" novalidate>
-        <label class="field-label" for="loginEmail">Admin email</label>
-        <input id="loginEmail" name="email" type="email" autocomplete="username" required placeholder="admin@example.com">
-        <label class="field-label" for="loginPassword">Password</label>
-        <div class="password-wrap"><input id="loginPassword" name="password" type="password" autocomplete="current-password" required placeholder="••••••••"><button type="button" class="icon-button password-toggle" data-target="loginPassword" aria-label="Show password"></button></div>
-        <button id="loginButton" class="btn btn-primary btn-block" type="submit"><span>Sign in</span></button>
-        <p id="loginError" class="form-error" role="alert"></p>
-      </form>
-      <p class="security-note">Admin access is enforced by Firebase Authentication and should also be restricted by Firebase Security Rules.</p>
-      <button id="openSetupFromLogin" class="text-button" type="button">Firebase setup</button>
-    </div>
+<div id="loadingScreen" class="loading-screen">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <div id="loadingText">Initializing Jinendra Vani...</div>
   </div>
+</div>
 
-  <div id="setupScreen" class="setup-screen hidden">
-    <div class="setup-card">
-      <div class="brand-line"><div class="brand-mark small"><span>JV</span></div><div><strong>Jinendra Vani</strong><span>Backend Dashboard</span></div></div>
-      <h1>Connect your services</h1>
-      <p class="muted">Firebase Web configuration is not embedded in the dashboard source. Enter it once below; it will be stored locally in this browser. The backend Worker URL is also stored locally and is never hardcoded.</p>
-      <form id="setupForm" novalidate>
-        <div class="section-divider"><span>Firebase Web Configuration</span></div>
-        <label class="field-label" for="firebaseConfigInput">Firebase config JSON</label>
-        <textarea id="firebaseConfigInput" class="code-input" rows="9" spellcheck="false" placeholder='{
-  "apiKey": "AIza...",
+<!-- =======================================================
+     SETUP SCREEN
+======================================================= -->
+
+<section id="setupScreen" class="setup-screen hidden">
+  <div class="setup-card">
+
+    <div class="brand">
+      <div class="brand-mark">JV</div>
+      <div>
+        <div class="brand-name">Jinendra Vani</div>
+        <div class="brand-sub">Backend Dashboard</div>
+      </div>
+    </div>
+
+    <h1>Connect your services</h1>
+
+    <p>
+      Firebase Web configuration is stored locally in this browser.
+      No Firebase Admin credentials or service-account private keys belong
+      in this dashboard.
+    </p>
+
+    <div class="setup-status">
+      <span id="setupStatusDot" class="status-dot"></span>
+      <span id="setupStatusText">Firebase not configured</span>
+    </div>
+
+    <div class="field">
+      <label for="firebaseConfigInput">Firebase Web Configuration JSON</label>
+
+      <textarea
+        id="firebaseConfigInput"
+        spellcheck="false"
+        autocomplete="off"
+        placeholder='{
+  "apiKey": "...",
   "authDomain": "...",
-  "databaseURL": "https://...",
+  "databaseURL": "...",
   "projectId": "...",
   "storageBucket": "...",
   "messagingSenderId": "...",
   "appId": "..."
 }'></textarea>
-        <div class="setup-grid">
-          <div><label class="field-label" for="setupUsersPath">Users path</label><input id="setupUsersPath" value="users" placeholder="users"></div>
-          <div><label class="field-label" for="setupQuestionsPath">Questions path</label><input id="setupQuestionsPath" value="spiritual_queries" placeholder="questions"></div>
-          <div><label class="field-label" for="setupReportsPath">Reports path</label><input id="setupReportsPath" value="reports" placeholder="reports"></div>
-          <div><label class="field-label" for="setupActivityPath">Activity path</label><input id="setupActivityPath" value="activity" placeholder="activity"></div>
-        </div>
-        <label class="switch-row"><input id="setupRequireAdmin" type="checkbox" checked><span class="switch-ui"></span><span><strong>Require Firebase admin claim</strong><small>Recommended. Your signed-in user must have the custom claim <code>admin: true</code>.</small></span></label>
-        <div class="setup-actions"><button class="btn btn-primary" type="submit">Save &amp; continue</button><button id="setupDemoReset" class="btn btn-secondary" type="button">Clear local setup</button></div>
-        <p id="setupError" class="form-error" role="alert"></p>
-      </form>
+
+      <div class="field-hint">
+        Paste the Firebase Web config generated by Firebase Console.
+        The dashboard does not embed it in JavaScript source.
+      </div>
     </div>
+
+    <div class="grid" style="grid-template-columns:1fr 1fr;">
+
+      <div class="field">
+        <label for="usersPathInput">Users path</label>
+        <input id="usersPathInput" value="users" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label for="questionsPathInput">Spiritual Questions path</label>
+        <input id="questionsPathInput" value="spiritual_queries" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label for="reportsPathInput">Reports path</label>
+        <input id="reportsPathInput" value="reports" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label for="activityPathInput">Activity path</label>
+        <input id="activityPathInput" value="activity" autocomplete="off">
+      </div>
+
+    </div>
+
+    <div class="field">
+      <label for="backendUrlInput">Backend API URL</label>
+      <input
+        id="backendUrlInput"
+        type="url"
+        placeholder="https://your-worker.workers.dev"
+        autocomplete="off">
+      <div class="field-hint">
+        Optional. This URL is stored locally and is never hardcoded into the source.
+      </div>
+    </div>
+
+    <div id="setupError" class="auth-error hidden"></div>
+
+    <div class="section-actions">
+      <button id="saveSetupBtn" class="btn btn-primary">
+        Save & Continue
+      </button>
+
+      <button id="clearSetupBtn" class="btn btn-secondary">
+        Clear Local Configuration
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- =======================================================
+     AUTH SCREEN
+======================================================= -->
+
+<section id="authScreen" class="auth-screen hidden">
+
+  <div class="auth-card">
+
+    <div class="brand">
+      <div class="brand-mark">JV</div>
+      <div>
+        <div class="brand-name">Jinendra Vani</div>
+        <div class="brand-sub">Backend Dashboard</div>
+      </div>
+    </div>
+
+    <h1 class="auth-title">Admin Login</h1>
+
+    <p class="auth-description">
+      Sign in with an authorized Firebase administrator account.
+    </p>
+
+    <div id="authError" class="auth-error hidden"></div>
+
+    <form id="loginForm">
+
+      <div class="field">
+        <label for="loginEmail">Email</label>
+        <input
+          id="loginEmail"
+          type="email"
+          autocomplete="username"
+          required
+          placeholder="admin@example.com">
+      </div>
+
+      <div class="field">
+        <label for="loginPassword">Password</label>
+        <input
+          id="loginPassword"
+          type="password"
+          autocomplete="current-password"
+          required
+          placeholder="Your password">
+      </div>
+
+      <button id="loginBtn" type="submit" class="btn btn-primary btn-block">
+        Sign In
+      </button>
+
+    </form>
+
+    <button id="forgotPasswordBtn" class="btn btn-ghost btn-block" style="margin-top:8px;">
+      Forgot password?
+    </button>
+
+    <button id="openSetupFromAuthBtn" class="btn btn-ghost btn-block" style="margin-top:3px;">
+      Firebase Configuration
+    </button>
+
   </div>
 
-  <div id="appShell" class="app-shell hidden">
-    <aside id="sidebar" class="sidebar" aria-label="Primary navigation">
-      <div class="sidebar-top">
-        <div class="brand-line"><div class="brand-mark small"><span>JV</span></div><div class="brand-copy"><strong>Jinendra Vani</strong><span>Backend Dashboard</span></div></div>
-        <button id="sidebarClose" class="icon-button mobile-only" aria-label="Close navigation"></button>
-      </div>
-      <nav id="nav" class="nav-list">
-        <button class="nav-item active" data-section="dashboard"><span class="nav-icon icon-grid"></span><span>Dashboard</span></button>
-        <button class="nav-item" data-section="questions"><span class="nav-icon icon-help"></span><span>Spiritual Questions</span><span id="questionsNavCount" class="nav-count hidden"></span></button>
-        <button class="nav-item" data-section="reports"><span class="nav-icon icon-report"></span><span>Reports</span><span id="reportsNavCount" class="nav-count hidden"></span></button>
-        <button class="nav-item" data-section="users"><span class="nav-icon icon-users"></span><span>Users</span></button>
-        <button class="nav-item" data-section="settings"><span class="nav-icon icon-settings"></span><span>Settings</span></button>
-      </nav>
-      <div class="sidebar-bottom">
-        <div class="service-status"><span id="serviceDot" class="status-dot"></span><div><strong id="serviceStatusText">Checking services</strong><small id="serviceStatusSub">—</small></div></div>
-        <button id="signOutButton" class="nav-item signout"><span class="nav-icon icon-logout"></span><span>Sign out</span></button>
-      </div>
-    </aside>
+</section>
 
-    <div id="sidebarBackdrop" class="sidebar-backdrop hidden"></div>
-    <main class="main-content">
-      <header class="topbar">
-        <div class="topbar-left"><button id="menuButton" class="icon-button mobile-only" aria-label="Open navigation"></button><div><p id="sectionEyebrow" class="eyebrow">Overview</p><h1 id="pageTitle">Dashboard</h1></div></div>
-        <div class="topbar-actions"><div class="online-pill"><span id="onlineDot" class="network-dot"></span><span id="onlineText">Online</span></div><button id="themeCycle" class="icon-button" aria-label="Change theme" title="Theme"></button><button id="refreshButton" class="icon-button" aria-label="Refresh current section" title="Refresh"></button><div class="avatar-menu"><button id="profileButton" class="avatar" aria-haspopup="true" aria-expanded="false">A</button><div id="profilePopover" class="popover hidden"><strong id="profileEmail">Admin</strong><small id="profileUid">—</small><button id="profileSignOut" class="popover-action">Sign out</button></div></div></div>
-      </header>
+<!-- =======================================================
+     DASHBOARD
+======================================================= -->
 
-      <section id="content" class="content" tabindex="-1">
-        <div id="dashboardSection" class="page-section active"></div>
-        <div id="questionsSection" class="page-section"></div>
-        <div id="reportsSection" class="page-section"></div>
-        <div id="usersSection" class="page-section"></div>
-        <div id="settingsSection" class="page-section"></div>
+<div id="dashboardApp" class="dashboard-layout hidden">
+
+  <aside id="sidebar" class="sidebar">
+
+    <div class="sidebar-brand">
+      <div class="brand">
+        <div class="brand-mark">JV</div>
+        <div>
+          <div class="brand-name">Jinendra Vani</div>
+          <div class="brand-sub">Backend Dashboard</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav">
+
+      <div class="nav-label">Management</div>
+
+      <button class="nav-btn active" data-page="dashboard">
+        <span class="nav-icon">⌂</span>
+        <span>Dashboard</span>
+      </button>
+
+      <button class="nav-btn" data-page="questions">
+        <span class="nav-icon">?</span>
+        <span>Spiritual Questions</span>
+      </button>
+
+      <button class="nav-btn" data-page="reports">
+        <span class="nav-icon">▤</span>
+        <span>Reports</span>
+      </button>
+
+      <button class="nav-btn" data-page="users">
+        <span class="nav-icon">♙</span>
+        <span>Users</span>
+      </button>
+
+      <div class="nav-label">System</div>
+
+      <button class="nav-btn" data-page="activity">
+        <span class="nav-icon">◷</span>
+        <span>Activity</span>
+      </button>
+
+      <button class="nav-btn" data-page="settings">
+        <span class="nav-icon">⚙</span>
+        <span>Settings</span>
+      </button>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <button id="sidebarThemeBtn" class="nav-btn">
+        <span class="nav-icon">◐</span>
+        <span>Toggle Theme</span>
+      </button>
+
+      <button id="sidebarLogoutBtn" class="nav-btn">
+        <span class="nav-icon">↪</span>
+        <span>Sign Out</span>
+      </button>
+
+    </div>
+
+  </aside>
+
+  <div id="drawerBackdrop" class="drawer-backdrop"></div>
+
+  <main class="main">
+
+    <header class="topbar">
+
+      <div class="topbar-left">
+
+        <button
+          id="mobileMenuBtn"
+          class="mobile-menu"
+          aria-label="Open navigation">
+          ☰
+        </button>
+
+        <div>
+          <div id="pageTitle" class="page-title">Dashboard</div>
+          <div id="pageSubtitle" class="page-subtitle">
+            Jinendra Vani Backend Management
+          </div>
+        </div>
+
+      </div>
+
+      <div class="topbar-right">
+
+        <div class="network-status">
+          <span id="networkDot" class="status-dot online"></span>
+          <span id="networkText">Online</span>
+        </div>
+
+        <div class="user-chip">
+
+          <div id="userAvatar" class="avatar">A</div>
+
+          <div id="userEmail" class="user-email">
+            Administrator
+          </div>
+
+        </div>
+
+      </div>
+
+    </header>
+
+    <div id="content" class="content"></div>
+
+  </main>
+
+</div>
+
+<!-- =======================================================
+     MODAL ROOT
+======================================================= -->
+
+<div id="modalRoot"></div>
+
+<div id="toastContainer" class="toast-container"></div>
+
+<script type="module">
+
+/* =========================================================
+   FIREBASE IMPORTS
+========================================================= */
+
+import {
+  initializeApp,
+  getApps,
+  deleteApp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+  getIdTokenResult
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+  getDatabase,
+  ref,
+  get,
+  set,
+  update,
+  remove,
+  push,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const STORAGE_KEY = "jinendra_vani_dashboard_config";
+const THEME_KEY = "jinendra_vani_dashboard_theme";
+
+const DEFAULT_PATHS = {
+  users: "users",
+  questions: "spiritual_queries",
+  reports: "reports",
+  activity: "activity"
+};
+
+let firebaseApp = null;
+let auth = null;
+let db = null;
+let currentUser = null;
+let currentPage = "dashboard";
+
+let unsubscribeAuth = null;
+
+const state = {
+  users: [],
+  questions: [],
+  reports: [],
+  activity: [],
+  loading: false
+};
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const $ = id => document.getElementById(id);
+
+const loadingScreen = $("loadingScreen");
+const loadingText = $("loadingText");
+const setupScreen = $("setupScreen");
+const authScreen = $("authScreen");
+const dashboardApp = $("dashboardApp");
+const content = $("content");
+const modalRoot = $("modalRoot");
+const toastContainer = $("toastContainer");
+
+/* =========================================================
+   UTILITIES
+========================================================= */
+
+function escapeHTML(value){
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function safeString(value){
+  if(value === null || value === undefined){
+    return "";
+  }
+
+  if(typeof value === "object"){
+    try{
+      return JSON.stringify(value);
+    }catch{
+      return "[Object]";
+    }
+  }
+
+  return String(value);
+}
+
+function formatValue(value){
+  if(value === null || value === undefined || value === ""){
+    return "Not available";
+  }
+
+  if(typeof value === "object"){
+    try{
+      return JSON.stringify(value,null,2);
+    }catch{
+      return "[Object]";
+    }
+  }
+
+  return String(value);
+}
+
+function formatDate(value){
+  if(value === null || value === undefined || value === ""){
+    return "Not available";
+  }
+
+  let date;
+
+  if(typeof value === "number"){
+    date = new Date(value);
+  }else if(typeof value === "string"){
+    const parsed = Date.parse(value);
+    date = Number.isNaN(parsed)
+      ? new Date(Number(value))
+      : new Date(parsed);
+  }else{
+    return "Not available";
+  }
+
+  if(Number.isNaN(date.getTime())){
+    return "Not available";
+  }
+
+  return new Intl.DateTimeFormat(undefined,{
+    dateStyle:"medium",
+    timeStyle:"short"
+  }).format(date);
+}
+
+function normalizeTimestamp(record){
+  const candidates = [
+    record?.updatedAt,
+    record?.updated_at,
+    record?.createdAt,
+    record?.created_at,
+    record?.timestamp,
+    record?.time
+  ];
+
+  for(const value of candidates){
+    if(value === null || value === undefined) continue;
+
+    if(typeof value === "number"){
+      return value;
+    }
+
+    const parsed = Date.parse(String(value));
+
+    if(!Number.isNaN(parsed)){
+      return parsed;
+    }
+
+    const numeric = Number(value);
+
+    if(!Number.isNaN(numeric)){
+      return numeric;
+    }
+  }
+
+  return 0;
+}
+
+function initials(email){
+  const value = String(email || "A").trim();
+
+  if(!value){
+    return "A";
+  }
+
+  return value
+    .split(/[\s@._-]+/)
+    .filter(Boolean)
+    .slice(0,2)
+    .map(x => x[0].toUpperCase())
+    .join("");
+}
+
+function debounce(fn,delay=250){
+  let timer;
+
+  return (...args)=>{
+    clearTimeout(timer);
+
+    timer = setTimeout(()=>{
+      fn(...args);
+    },delay);
+  };
+}
+
+function isOnline(){
+  return navigator.onLine;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function toast(message,type="info"){
+  const el = document.createElement("div");
+
+  el.className = `toast ${type}`;
+
+  const icon = document.createElement("strong");
+
+  icon.textContent =
+    type === "success" ? "✓" :
+    type === "error" ? "!" :
+    type === "warning" ? "!" :
+    "i";
+
+  const text = document.createElement("div");
+
+  text.textContent = message;
+
+  el.append(icon,text);
+  toastContainer.appendChild(el);
+
+  setTimeout(()=>{
+    el.remove();
+  },4200);
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+function showLoading(text="Loading..."){
+  loadingText.textContent = text;
+  loadingScreen.classList.remove("hidden");
+}
+
+function hideLoading(){
+  loadingScreen.classList.add("hidden");
+}
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function applyTheme(){
+  const saved = localStorage.getItem(THEME_KEY) || "system";
+
+  if(saved === "dark"){
+    document.documentElement.dataset.theme = "dark";
+    return;
+  }
+
+  if(saved === "light"){
+    document.documentElement.dataset.theme = "light";
+    return;
+  }
+
+  const dark = window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  document.documentElement.dataset.theme = dark ? "dark" : "light";
+}
+
+function cycleTheme(){
+  const current = localStorage.getItem(THEME_KEY) || "system";
+
+  const next =
+    current === "system" ? "light" :
+    current === "light" ? "dark" :
+    "system";
+
+  localStorage.setItem(THEME_KEY,next);
+
+  applyTheme();
+
+  toast(
+    next === "system"
+      ? "Theme set to System"
+      : `Theme set to ${next}`,
+    "success"
+  );
+}
+
+/* =========================================================
+   CONFIG
+========================================================= */
+
+function loadConfig(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+
+    if(!raw){
+      return null;
+    }
+
+    const parsed = JSON.parse(raw);
+
+    if(!parsed || typeof parsed !== "object"){
+      return null;
+    }
+
+    return parsed;
+  }catch(error){
+    console.error("Failed to load dashboard configuration:",error);
+    return null;
+  }
+}
+
+function saveConfig(config){
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(config)
+  );
+}
+
+function clearConfig(){
+  localStorage.removeItem(STORAGE_KEY);
+}
+
+function normalizeConfig(config){
+  return {
+    firebaseConfig: config.firebaseConfig || null,
+    paths:{
+      users:
+        config.paths?.users?.trim() ||
+        DEFAULT_PATHS.users,
+
+      questions:
+        config.paths?.questions?.trim() ||
+        DEFAULT_PATHS.questions,
+
+      reports:
+        config.paths?.reports?.trim() ||
+        DEFAULT_PATHS.reports,
+
+      activity:
+        config.paths?.activity?.trim() ||
+        DEFAULT_PATHS.activity
+    },
+    backendApiUrl:
+      config.backendApiUrl?.trim() || ""
+  };
+}
+
+function parseFirebaseConfig(text){
+  let parsed;
+
+  try{
+    parsed = JSON.parse(text);
+  }catch{
+    throw new Error("Firebase configuration JSON is invalid.");
+  }
+
+  const required = [
+    "apiKey",
+    "authDomain",
+    "databaseURL",
+    "projectId",
+    "storageBucket",
+    "messagingSenderId",
+    "appId"
+  ];
+
+  for(const key of required){
+    if(!parsed[key]){
+      throw new Error(`Firebase configuration is missing: ${key}`);
+    }
+  }
+
+  if(!/^https?:\/\//i.test(parsed.databaseURL)){
+    throw new Error("Firebase databaseURL is invalid.");
+  }
+
+  return parsed;
+}
+
+function validateBackendURL(value){
+  if(!value){
+    return true;
+  }
+
+  try{
+    const url = new URL(value);
+
+    if(url.protocol !== "http:" && url.protocol !== "https:"){
+      return false;
+    }
+
+    return true;
+  }catch{
+    return false;
+  }
+}
+
+/* =========================================================
+   FIREBASE INITIALIZATION
+========================================================= */
+
+async function initializeFirebase(config){
+  try{
+
+    if(firebaseApp){
+
+      try{
+        await deleteApp(firebaseApp);
+      }catch(error){
+        console.warn("Previous Firebase app cleanup failed:",error);
+      }
+
+      firebaseApp = null;
+      auth = null;
+      db = null;
+    }
+
+    firebaseApp = initializeApp(config.firebaseConfig);
+    auth = getAuth(firebaseApp);
+    db = getDatabase(firebaseApp);
+
+    return true;
+
+  }catch(error){
+
+    console.error("Firebase initialization failed:",error);
+
+    throw new Error(
+      "Firebase could not be initialized. Check your configuration."
+    );
+  }
+}
+
+/* =========================================================
+   FIREBASE SERVICE
+========================================================= */
+
+const FirebaseService = {
+
+  path(name){
+
+    const config = loadConfig();
+
+    return config?.paths?.[name] || DEFAULT_PATHS[name];
+  },
+
+  root(name){
+    if(!db){
+      throw new Error("Firebase database is not initialized.");
+    }
+
+    return ref(db,this.path(name));
+  },
+
+  async getUsers(){
+
+    const snapshot = await get(this.root("users"));
+
+    if(!snapshot.exists()){
+      return [];
+    }
+
+    return normalizeCollection(snapshot.val(),{
+      nested:false
+    });
+  },
+
+  async getQuestions(){
+
+    const snapshot = await get(this.root("questions"));
+
+    if(!snapshot.exists()){
+      return [];
+    }
+
+    return normalizeCollection(snapshot.val(),{
+      nested:true,
+      type:"question"
+    });
+  },
+
+  async getReports(){
+
+    const snapshot = await get(this.root("reports"));
+
+    if(!snapshot.exists()){
+      return [];
+    }
+
+    return normalizeCollection(snapshot.val(),{
+      nested:true,
+      type:"report"
+    });
+  },
+
+  async getActivity(){
+
+    const snapshot = await get(this.root("activity"));
+
+    if(!snapshot.exists()){
+      return [];
+    }
+
+    return normalizeCollection(snapshot.val(),{
+      nested:false
+    });
+  },
+
+  async createQuestion(userId,data){
+
+    if(!userId){
+      throw new Error("Please select a user.");
+    }
+
+    const parent = ref(
+      db,
+      `${this.path("questions")}/${userId}`
+    );
+
+    const newRef = push(parent);
+
+    const payload = {
+      ...data,
+      createdAt:serverTimestamp(),
+      updatedAt:serverTimestamp()
+    };
+
+    await set(newRef,payload);
+
+    return {
+      uid:userId,
+      id:newRef.key,
+      ...data
+    };
+  },
+
+  async updateQuestion(item,data){
+
+    if(!item.uid || !item.id){
+      throw new Error("Question identifier is missing.");
+    }
+
+    const target = ref(
+      db,
+      `${this.path("questions")}/${item.uid}/${item.id}`
+    );
+
+    await update(target,{
+      ...data,
+      updatedAt:serverTimestamp()
+    });
+  },
+
+  async deleteQuestion(item){
+
+    if(!item.uid || !item.id){
+      throw new Error("Question identifier is missing.");
+    }
+
+    const target = ref(
+      db,
+      `${this.path("questions")}/${item.uid}/${item.id}`
+    );
+
+    await remove(target);
+  },
+
+  async updateReport(item,data){
+
+    if(!item.uid || !item.id){
+      throw new Error("Report identifier is missing.");
+    }
+
+    const target = ref(
+      db,
+      `${this.path("reports")}/${item.uid}/${item.id}`
+    );
+
+    await update(target,{
+      ...data,
+      updatedAt:serverTimestamp()
+    });
+  },
+
+  async deleteReport(item){
+
+    if(!item.uid || !item.id){
+      throw new Error("Report identifier is missing.");
+    }
+
+    const target = ref(
+      db,
+      `${this.path("reports")}/${item.uid}/${item.id}`
+    );
+
+    await remove(target);
+  },
+
+  async updateUser(item,data){
+
+    if(!item.id){
+      throw new Error("User identifier is missing.");
+    }
+
+    const target = ref(
+      db,
+      `${this.path("users")}/${item.id}`
+    );
+
+    await update(target,data);
+  },
+
+  async deleteUser(item){
+
+    if(!item.id){
+      throw new Error("User identifier is missing.");
+    }
+
+    const target = ref(
+      db,
+      `${this.path("users")}/${item.id}`
+    );
+
+    await remove(target);
+  },
+
+  async logActivity(action,details={}){
+
+    try{
+
+      if(!db){
+        return;
+      }
+
+      const parent = this.root("activity");
+      const newRef = push(parent);
+
+      await set(newRef,{
+        action,
+        details,
+        adminUid:currentUser?.uid || null,
+        adminEmail:currentUser?.email || null,
+        createdAt:serverTimestamp()
+      });
+
+    }catch(error){
+
+      console.warn(
+        "Activity log failed:",
+        error
+      );
+
+    }
+  }
+
+};
+
+/* =========================================================
+   NORMALIZE FIREBASE COLLECTIONS
+========================================================= */
+
+function normalizeCollection(value,options={}){
+  const result = [];
+
+  if(!value || typeof value !== "object"){
+    return result;
+  }
+
+  const nested = options.nested === true;
+  const type = options.type || "record";
+
+  for(const [key,val] of Object.entries(value)){
+
+    if(!val || typeof val !== "object"){
+      continue;
+    }
+
+    if(nested){
+
+      const looksLikeRecord =
+        Object.prototype.hasOwnProperty.call(val,"question") ||
+        Object.prototype.hasOwnProperty.call(val,"answer") ||
+        Object.prototype.hasOwnProperty.call(val,"description") ||
+        Object.prototype.hasOwnProperty.call(val,"status") ||
+        Object.prototype.hasOwnProperty.call(val,"createdAt") ||
+        Object.prototype.hasOwnProperty.call(val,"updatedAt");
+
+      if(looksLikeRecord){
+
+        result.push({
+          id:key,
+          uid:val.uid || val.userId || "",
+          type,
+          ...val
+        });
+
+        continue;
+      }
+
+      for(const [childKey,childValue] of Object.entries(val)){
+
+        if(!childValue || typeof childValue !== "object"){
+          continue;
+        }
+
+        result.push({
+          id:childKey,
+          uid:key,
+          type,
+          ...childValue
+        });
+
+      }
+
+    }else{
+
+      result.push({
+        id:key,
+        ...val
+      });
+
+    }
+  }
+
+  return result;
+}
+
+/* =========================================================
+   ADMIN CHECK
+========================================================= */
+
+async function verifyAdmin(user){
+
+  if(!user){
+    return false;
+  }
+
+  try{
+
+    const tokenResult = await getIdTokenResult(user,true);
+
+    return tokenResult?.claims?.admin === true;
+
+  }catch(error){
+
+    console.error("Admin claim verification failed:",error);
+
+    return false;
+  }
+}
+
+/* =========================================================
+   DATA LOADING
+========================================================= */
+
+async function loadAllData(){
+
+  if(!isOnline()){
+    throw new Error("You are offline. Connect to the internet first.");
+  }
+
+  try{
+
+    state.loading = true;
+
+    const [
+      users,
+      questions,
+      reports,
+      activity
+    ] = await Promise.all([
+      FirebaseService.getUsers(),
+      FirebaseService.getQuestions(),
+      FirebaseService.getReports(),
+      FirebaseService.getActivity()
+    ]);
+
+    state.users = users;
+    state.questions = questions;
+    state.reports = reports;
+    state.activity = activity
+      .sort((a,b)=>normalizeTimestamp(b)-normalizeTimestamp(a))
+      .slice(0,100);
+
+  }finally{
+
+    state.loading = false;
+
+  }
+}
+
+/* =========================================================
+   PAGE TITLES
+========================================================= */
+
+const PAGE_META = {
+
+  dashboard:{
+    title:"Dashboard",
+    subtitle:"Jinendra Vani Backend Management"
+  },
+
+  questions:{
+    title:"Spiritual Questions",
+    subtitle:"Manage user spiritual queries"
+  },
+
+  reports:{
+    title:"Reports",
+    subtitle:"Review and manage submitted reports"
+  },
+
+  users:{
+    title:"Users",
+    subtitle:"Manage application user data"
+  },
+
+  activity:{
+    title:"Activity",
+    subtitle:"Recent administrator actions"
+  },
+
+  settings:{
+    title:"Settings",
+    subtitle:"Dashboard and backend configuration"
+  }
+
+};
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function setActiveNav(page){
+
+  document.querySelectorAll(".nav-btn[data-page]").forEach(btn=>{
+    btn.classList.toggle(
+      "active",
+      btn.dataset.page === page
+    );
+  });
+
+  const meta = PAGE_META[page] || PAGE_META.dashboard;
+
+  $("pageTitle").textContent = meta.title;
+  $("pageSubtitle").textContent = meta.subtitle;
+}
+
+async function navigate(page){
+
+  currentPage = page;
+
+  setActiveNav(page);
+
+  closeDrawer();
+
+  try{
+
+    if(page !== "settings"){
+      await loadAllData();
+    }
+
+    renderPage();
+
+  }catch(error){
+
+    console.error("Page loading failed:",error);
+
+    toast(
+      humanError(error),
+      "error"
+    );
+
+    renderPage();
+
+  }
+}
+
+function renderPage(){
+
+  switch(currentPage){
+
+    case "questions":
+      renderQuestions();
+      break;
+
+    case "reports":
+      renderReports();
+      break;
+
+    case "users":
+      renderUsers();
+      break;
+
+    case "activity":
+      renderActivity();
+      break;
+
+    case "settings":
+      renderSettings();
+      break;
+
+    default:
+      renderDashboard();
+
+  }
+
+}
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function renderDashboard(){
+
+  const totalUsers = state.users.length;
+
+  const activeUsers = state.users.filter(user=>{
+    const status = String(
+      user.status ||
+      user.accountStatus ||
+      ""
+    ).toLowerCase();
+
+    return status === "active" ||
+      user.active === true ||
+      user.isActive === true;
+  }).length;
+
+  const pendingReports = state.reports.filter(report=>{
+    return String(report.status || "pending").toLowerCase() === "pending";
+  }).length;
+
+  content.innerHTML = `
+
+    <div class="section-header">
+
+      <div>
+        <h1>Overview</h1>
+        <p>
+          Monitor your Jinendra Vani backend from one place.
+        </p>
+      </div>
+
+      <div class="section-actions">
+        <button class="btn btn-secondary" id="refreshDashboardBtn">
+          Refresh
+        </button>
+      </div>
+
+    </div>
+
+    <div class="grid stats-grid">
+
+      ${statCard("Users",totalUsers,"♙")}
+
+      ${statCard("Active Users",activeUsers,"●")}
+
+      ${statCard("Spiritual Questions",state.questions.length,"?")}
+
+      ${statCard("Reports",state.reports.length,"▤")}
+
+      ${statCard("Pending Reports",pendingReports,"!")}
+
+    </div>
+
+    <div class="grid dashboard-grid">
+
+      <section class="card card-padding">
+
+        <div class="section-header" style="margin-bottom:5px;">
+          <div>
+            <h2 style="font-size:17px;margin:0;">
+              Recent Activity
+            </h2>
+            <p>
+              Latest dashboard activity
+            </p>
+          </div>
+        </div>
+
+        ${activityMarkup(8)}
+
       </section>
-    </main>
-  </div>
 
-  <div id="modalRoot"></div>
-  <div id="toastRoot" class="toast-root" aria-live="polite" aria-atomic="true"></div>
-  <div id="globalLoader" class="global-loader hidden"><div class="spinner"></div><span>Working…</span></div>
+      <section class="card card-padding">
 
-  <script type="module" src="./app.js"></script>
+        <div class="section-header" style="margin-bottom:5px;">
+          <div>
+            <h2 style="font-size:17px;margin:0;">
+              Backend Status
+            </h2>
+            <p>
+              Current service configuration
+            </p>
+          </div>
+        </div>
+
+        ${backendStatusMarkup()}
+
+      </section>
+
+    </div>
+  `;
+
+  $("refreshDashboardBtn")?.addEventListener(
+    "click",
+    async()=>{
+      await navigate("dashboard");
+      toast("Dashboard refreshed","success");
+    }
+  );
+}
+
+function statCard(label,value,icon){
+
+  return `
+    <div class="card stat-card">
+
+      <div class="stat-top">
+
+        <div class="stat-icon">
+          ${escapeHTML(icon)}
+        </div>
+
+        <span class="badge badge-neutral">
+          Live
+        </span>
+
+      </div>
+
+      <div class="stat-value">
+        ${Number.isFinite(value) ? value : "—"}
+      </div>
+
+      <div class="stat-label">
+        ${escapeHTML(label)}
+      </div>
+
+    </div>
+  `;
+}
+
+function backendStatusMarkup(){
+
+  const config = loadConfig();
+
+  const firebaseConfigured =
+    !!config?.firebaseConfig;
+
+  const backendConfigured =
+    !!config?.backendApiUrl;
+
+  return `
+
+    <div style="display:grid;gap:10px;margin-top:15px;">
+
+      <div class="config-status">
+        <strong>Firebase</strong><br>
+        <span class="muted">
+          ${firebaseConfigured ? "Configured" : "Not configured"}
+        </span>
+      </div>
+
+      <div class="config-status">
+        <strong>Backend API</strong><br>
+        <span class="muted">
+          ${backendConfigured ? "Configured locally" : "Not configured"}
+        </span>
+      </div>
+
+      <div class="config-status">
+        <strong>Database</strong><br>
+        <span class="muted">
+          ${db ? "Connected" : "Not connected"}
+        </span>
+      </div>
+
+    </div>
+  `;
+}
+
+/* =========================================================
+   QUESTIONS
+========================================================= */
+
+function renderQuestions(){
+
+  let search = "";
+  let category = "all";
+  let language = "all";
+  let status = "all";
+  let sort = "newest";
+
+  const categories = [
+    ...new Set(
+      state.questions
+        .map(q=>q.category)
+        .filter(Boolean)
+        .map(String)
+    )
+  ].sort();
+
+  const languages = [
+    ...new Set(
+      state.questions
+        .map(q=>q.language)
+        .filter(Boolean)
+        .map(String)
+    )
+  ].sort();
+
+  const toolbarId = `questionToolbar_${Date.now()}`;
+
+  content.innerHTML = `
+
+    <div class="section-header">
+
+      <div>
+        <h1>Spiritual Questions</h1>
+        <p>
+          Create, update and remove spiritual questions.
+        </p>
+      </div>
+
+      <div class="section-actions">
+
+        <button
+          id="newQuestionBtn"
+          class="btn btn-primary">
+          + Add Question
+        </button>
+
+        <button
+          id="refreshQuestionsBtn"
+          class="btn btn-secondary">
+          Refresh
+        </button>
+
+      </div>
+
+    </div>
+
+    <section class="card">
+
+      <div class="toolbar" id="${toolbarId}">
+
+        <div class="search">
+
+          <span class="search-icon">⌕</span>
+
+          <input
+            id="questionSearch"
+            placeholder="Search questions, answers, users..."
+            autocomplete="off">
+
+        </div>
+
+        <select id="questionCategory">
+          <option value="all">All categories</option>
+          ${categories.map(item=>`
+            <option value="${escapeHTML(item)}">
+              ${escapeHTML(item)}
+            </option>
+          `).join("")}
+        </select>
+
+        <select id="questionLanguage">
+          <option value="all">All languages</option>
+          ${languages.map(item=>`
+            <option value="${escapeHTML(item)}">
+              ${escapeHTML(item)}
+            </option>
+          `).join("")}
+        </select>
+
+        <select id="questionStatus">
+
+          <option value="all">All statuses</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+          <option value="pending">Pending</option>
+
+        </select>
+
+        <select id="questionSort">
+
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+          <option value="alpha">Alphabetical</option>
+
+        </select>
+
+      </div>
+
+      <div id="questionsTable"></div>
+
+    </section>
+  `;
+
+  const renderFiltered = ()=>{
+
+    search = $("questionSearch")?.value.trim().toLowerCase() || "";
+    category = $("questionCategory")?.value || "all";
+    language = $("questionLanguage")?.value || "all";
+    status = $("questionStatus")?.value || "all";
+    sort = $("questionSort")?.value || "newest";
+
+    let records = [...state.questions];
+
+    records = records.filter(item=>{
+
+      const searchable = [
+        item.question,
+        item.answer,
+        item.category,
+        item.language,
+        item.uid,
+        item.id
+      ]
+      .map(safeString)
+      .join(" ")
+      .toLowerCase();
+
+      if(search && !searchable.includes(search)){
+        return false;
+      }
+
+      if(
+        category !== "all" &&
+        safeString(item.category) !== category
+      ){
+        return false;
+      }
+
+      if(
+        language !== "all" &&
+        safeString(item.language) !== language
+      ){
+        return false;
+      }
+
+      if(status !== "all"){
+
+        const current = safeString(
+          item.status || "active"
+        ).toLowerCase();
+
+        if(current !== status){
+          return false;
+        }
+      }
+
+      return true;
+
+    });
+
+    if(sort === "alpha"){
+
+      records.sort((a,b)=>
+        safeString(a.question)
+          .localeCompare(
+            safeString(b.question)
+          )
+      );
+
+    }else if(sort === "oldest"){
+
+      records.sort(
+        (a,b)=>
+          normalizeTimestamp(a) -
+          normalizeTimestamp(b)
+      );
+
+    }else{
+
+      records.sort(
+        (a,b)=>
+          normalizeTimestamp(b) -
+          normalizeTimestamp(a)
+      );
+
+    }
+
+    renderQuestionRecords(records);
+
+  };
+
+  $("questionSearch")?.addEventListener(
+    "input",
+    debounce(renderFiltered,180)
+  );
+
+  [
+    "questionCategory",
+    "questionLanguage",
+    "questionStatus",
+    "questionSort"
+  ].forEach(id=>{
+    $(id)?.addEventListener("change",renderFiltered);
+  });
+
+  $("newQuestionBtn")?.addEventListener(
+    "click",
+    ()=>openQuestionModal()
+  );
+
+  $("refreshQuestionsBtn")?.addEventListener(
+    "click",
+    ()=>navigate("questions")
+  );
+
+  renderFiltered();
+}
+
+function renderQuestionRecords(records){
+
+  const root = $("questionsTable");
+
+  if(!root){
+    return;
+  }
+
+  if(records.length === 0){
+
+    root.innerHTML = emptyMarkup(
+      "?",
+      "No questions found.",
+      "Try changing your filters or create a new question."
+    );
+
+    return;
+  }
+
+  root.innerHTML = `
+
+    <div class="table-wrap">
+
+      <table class="table">
+
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>Category</th>
+            <th>Language</th>
+            <th>Status</th>
+            <th>Updated</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          ${records.map(item=>`
+
+            <tr>
+
+              <td>
+                <div class="primary-text truncate">
+                  ${escapeHTML(
+                    item.question ||
+                    item.title ||
+                    "Untitled question"
+                  )}
+                </div>
+
+                <div class="muted truncate">
+                  UID: ${escapeHTML(item.uid || "Not available")}
+                </div>
+              </td>
+
+              <td>
+                ${escapeHTML(
+                  item.category || "Not available"
+                )}
+              </td>
+
+              <td>
+                ${escapeHTML(
+                  item.language || "Not available"
+                )}
+              </td>
+
+              <td>
+                ${statusBadge(item.status || "active")}
+              </td>
+
+              <td>
+                ${escapeHTML(
+                  formatDate(
+                    item.updatedAt ||
+                    item.createdAt
+                  )
+                )}
+              </td>
+
+              <td>
+                <div class="action-row">
+
+                  <button
+                    class="icon-btn"
+                    title="View"
+                    data-question-view="${escapeHTML(item.uid)}::${escapeHTML(item.id)}">
+                    👁
+                  </button>
+
+                  <button
+                    class="icon-btn"
+                    title="Edit"
+                    data-question-edit="${escapeHTML(item.uid)}::${escapeHTML(item.id)}">
+                    ✎
+                  </button>
+
+                  <button
+                    class="icon-btn"
+                    title="Delete"
+                    data-question-delete="${escapeHTML(item.uid)}::${escapeHTML(item.id)}">
+                    ×
+                  </button>
+
+                </div>
+              </td>
+
+            </tr>
+
+          `).join("")}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <div class="mobile-list">
+
+      ${records.map(item=>`
+
+        <div class="mobile-record">
+
+          <div class="mobile-record-head">
+
+            <div class="mobile-record-title">
+              ${escapeHTML(
+                item.question ||
+                item.title ||
+                "Untitled question"
+              )}
+            </div>
+
+            ${statusBadge(item.status || "active")}
+
+          </div>
+
+          <div class="mobile-record-meta">
+
+            <div>
+              <div class="meta-label">Category</div>
+              <div class="meta-value">
+                ${escapeHTML(item.category || "Not available")}
+              </div>
+            </div>
+
+            <div>
+              <div class="meta-label">Language</div>
+              <div class="meta-value">
+                ${escapeHTML(item.language || "Not available")}
+              </div>
+            </div>
+
+            <div>
+              <div class="meta-label">User UID</div>
+              <div class="meta-value">
+                ${escapeHTML(item.uid || "Not available")}
+              </div>
+            </div>
+
+            <div>
+              <div class="meta-label">Updated</div>
+              <div class="meta-value">
+                ${escapeHTML(formatDate(item.updatedAt || item.createdAt))}
+              </div>
+            </div>
+
+          </div>
+
+          <div class="mobile-record-actions">
+
+            <button
+              class="btn btn-secondary"
+              data-question-view="${escapeHTML(item.uid)}::${escapeHTML(item.id)}">
+              View
+            </button>
+
+            <button
+              class="btn btn-secondary"
+              data-question-edit="${escapeHTML(item.uid)}::${escapeHTML(item.id)}">
+              Edit
+            </button>
+
+            <button
+              class="btn btn-danger"
+              data-question-delete="${escapeHTML(item.uid)}::${escapeHTML(item.id)}">
+              Delete
+            </button>
+
+          </div>
+
+        </div>
+
+      `).join("")}
+
+    </div>
+
+  `;
+
+  root.querySelectorAll("[data-question-view]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const [uid,id] = btn.dataset.questionView.split("::");
+      const item = state.questions.find(
+        q=>q.uid === uid && q.id === id
+      );
+
+      if(item){
+        openRecordView(
+          "Spiritual Question",
+          item
+        );
+      }
+    });
+  });
+
+  root.querySelectorAll("[data-question-edit]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const [uid,id] = btn.dataset.questionEdit.split("::");
+      const item = state.questions.find(
+        q=>q.uid === uid && q.id === id
+      );
+
+      if(item){
+        openQuestionModal(item);
+      }
+    });
+  });
+
+  root.querySelectorAll("[data-question-delete]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const [uid,id] = btn.dataset.questionDelete.split("::");
+      const item = state.questions.find(
+        q=>q.uid === uid && q.id === id
+      );
+
+      if(item){
+        confirmDelete(
+          "Delete this spiritual question?",
+          "This action cannot be undone.",
+          async()=>{
+
+            await FirebaseService.deleteQuestion(item);
+
+            await FirebaseService.logActivity(
+              "Question deleted",
+              {
+                uid:item.uid,
+                questionId:item.id
+              }
+            );
+
+            toast(
+              "Question deleted successfully",
+              "success"
+            );
+
+            await navigate("questions");
+          }
+        );
+      }
+    });
+  });
+}
+
+/* =========================================================
+   QUESTION MODAL
+========================================================= */
+
+function openQuestionModal(existing=null){
+
+  const editing = !!existing;
+
+  const userOptions = state.users
+    .map(user=>{
+
+      const label =
+        user.name ||
+        user.displayName ||
+        user.email ||
+        user.id;
+
+      return `
+        <option
+          value="${escapeHTML(user.id)}"
+          ${existing?.uid === user.id ? "selected" : ""}>
+          ${escapeHTML(label)} — ${escapeHTML(user.id)}
+        </option>
+      `;
+
+    })
+    .join("");
+
+  openModal(
+    editing
+      ? "Edit Spiritual Question"
+      : "Add Spiritual Question",
+    `
+
+      <form id="questionForm">
+
+        <div class="field">
+
+          <label for="questionUser">
+            User
+          </label>
+
+          <select
+            id="questionUser"
+            ${editing ? "disabled" : ""}
+            required>
+
+            <option value="">
+              Select user
+            </option>
+
+            ${userOptions}
+
+          </select>
+
+          <div class="field-hint">
+            Questions are stored under
+            spiritual_queries/{uid}/{questionId}.
+          </div>
+
+        </div>
+
+        <div class="field">
+
+          <label for="questionText">
+            Question
+          </label>
+
+          <textarea
+            id="questionText"
+            required
+            maxlength="10000"
+            placeholder="Enter spiritual question">${escapeHTML(
+              existing?.question || ""
+            )}</textarea>
+
+        </div>
+
+        <div class="field">
+
+          <label for="questionAnswer">
+            Answer
+          </label>
+
+          <textarea
+            id="questionAnswer"
+            maxlength="30000"
+            placeholder="Enter answer">${escapeHTML(
+              existing?.answer || ""
+            )}</textarea>
+
+        </div>
+
+        <div class="grid" style="grid-template-columns:1fr 1fr;">
+
+          <div class="field">
+
+            <label for="questionCategory">
+              Category
+            </label>
+
+            <input
+              id="questionCategory"
+              maxlength="100"
+              value="${escapeHTML(existing?.category || "")}"
+              placeholder="e.g. Jainism">
+
+          </div>
+
+          <div class="field">
+
+            <label for="questionLanguage">
+              Language
+            </label>
+
+            <input
+              id="questionLanguage"
+              maxlength="50"
+              value="${escapeHTML(existing?.language || "")}"
+              placeholder="e.g. Hindi">
+
+          </div>
+
+        </div>
+
+        <div class="field">
+
+          <label for="questionStatus">
+            Status
+          </label>
+
+          <select id="questionStatus">
+
+            <option
+              value="active"
+              ${existing?.status === "active" || !existing?.status ? "selected" : ""}>
+              Active
+            </option>
+
+            <option
+              value="inactive"
+              ${existing?.status === "inactive" ? "selected" : ""}>
+              Inactive
+            </option>
+
+            <option
+              value="pending"
+              ${existing?.status === "pending" ? "selected" : ""}>
+              Pending
+            </option>
+
+          </select>
+
+        </div>
+
+        <div id="questionFormError" class="auth-error hidden"></div>
+
+        <div class="modal-footer">
+
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-close-modal>
+            Cancel
+          </button>
+
+          <button
+            id="saveQuestionBtn"
+            type="submit"
+            class="btn btn-primary">
+            ${editing ? "Save Changes" : "Create Question"}
+          </button>
+
+        </div>
+
+      </form>
+
+    `
+  );
+
+  $("questionForm").addEventListener(
+    "submit",
+    async event=>{
+
+      event.preventDefault();
+
+      const btn = $("saveQuestionBtn");
+      const errorBox = $("questionFormError");
+
+      errorBox.classList.add("hidden");
+      btn.disabled = true;
+      btn.textContent = editing ? "Saving..." : "Creating...";
+
+      try{
+
+        if(!isOnline()){
+          throw new Error(
+            "You are offline. Connect to the internet first."
+          );
+        }
+
+        const uid =
+          existing?.uid ||
+          $("questionUser").value.trim();
+
+        const question =
+          $("questionText").value.trim();
+
+        const answer =
+          $("questionAnswer").value.trim();
+
+        const category =
+          $("questionCategory").value.trim();
+
+        const language =
+          $("questionLanguage").value.trim();
+
+        const status =
+          $("questionStatus").value;
+
+        if(!uid){
+          throw new Error("Please select a user.");
+        }
+
+        if(!question){
+          throw new Error("Question cannot be empty.");
+        }
+
+        if(![
+          "active",
+          "inactive",
+          "pending"
+        ].includes(status)){
+          throw new Error("Invalid status.");
+        }
+
+        const payload = {
+          question,
+          answer,
+          category,
+          language,
+          status
+        };
+
+        if(editing){
+
+          await FirebaseService.updateQuestion(
+            existing,
+            payload
+          );
+
+          await FirebaseService.logActivity(
+            "Question updated",
+            {
+              uid:existing.uid,
+              questionId:existing.id
+            }
+          );
+
+          toast(
+            "Question updated successfully",
+            "success"
+          );
+
+        }else{
+
+          await FirebaseService.createQuestion(
+            uid,
+            payload
+          );
+
+          await FirebaseService.logActivity(
+            "Question created",
+            {
+              uid
+            }
+          );
+
+          toast(
+            "Question created successfully",
+            "success"
+          );
+
+        }
+
+        closeModal();
+
+        await navigate("questions");
+
+      }catch(error){
+
+        console.error(
+          "Question save failed:",
+          error
+        );
+
+        errorBox.textContent =
+          humanError(error);
+
+        errorBox.classList.remove("hidden");
+
+      }finally{
+
+        btn.disabled = false;
+        btn.textContent =
+          editing ? "Save Changes" : "Create Question";
+
+      }
+
+    }
+  );
+}
+
+/* =========================================================
+   REPORTS
+========================================================= */
+
+function renderReports(){
+
+  let search = "";
+  let status = "all";
+  let sort = "newest";
+
+  content.innerHTML = `
+
+    <div class="section-header">
+
+      <div>
+        <h1>Reports</h1>
+        <p>
+          Review user-submitted reports and update their status.
+        </p>
+      </div>
+
+      <div class="section-actions">
+
+        <button
+          id="refreshReportsBtn"
+          class="btn btn-secondary">
+          Refresh
+        </button>
+
+      </div>
+
+    </div>
+
+    <section class="card">
+
+      <div class="toolbar">
+
+        <div class="search">
+
+          <span class="search-icon">⌕</span>
+
+          <input
+            id="reportSearch"
+            placeholder="Search reports..."
+            autocomplete="off">
+
+        </div>
+
+        <select id="reportStatus">
+
+          <option value="all">All statuses</option>
+          <option value="pending">Pending</option>
+          <option value="reviewing">Reviewing</option>
+          <option value="resolved">Resolved</option>
+          <option value="rejected">Rejected</option>
+
+        </select>
+
+        <select id="reportSort">
+
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+
+        </select>
+
+      </div>
+
+      <div id="reportsTable"></div>
+
+    </section>
+
+  `;
+
+  const renderFiltered = ()=>{
+
+    search =
+      $("reportSearch")?.value.trim().toLowerCase() || "";
+
+    status =
+      $("reportStatus")?.value || "all";
+
+    sort =
+      $("reportSort")?.value || "newest";
+
+    let records = state.reports.filter(item=>{
+
+      const searchable = [
+        item.id,
+        item.uid,
+        item.userId,
+        item.type,
+        item.description,
+        item.message,
+        item.status
+      ]
+      .map(safeString)
+      .join(" ")
+      .toLowerCase();
+
+      if(search && !searchable.includes(search)){
+        return false;
+      }
+
+      if(status !== "all"){
+
+        const current =
+          safeString(item.status || "pending")
+            .toLowerCase();
+
+        if(current !== status){
+          return false;
+        }
+
+      }
+
+      return true;
+
+    });
+
+    records.sort((a,b)=>{
+
+      const result =
+        normalizeTimestamp(b) -
+        normalizeTimestamp(a);
+
+      return sort === "newest"
+        ? result
+        : -result;
+
+    });
+
+    renderReportRecords(records);
+
+  };
+
+  $("reportSearch")?.addEventListener(
+    "input",
+    debounce(renderFiltered,180)
+  );
+
+  $("reportStatus")?.addEventListener(
+    "change",
+    renderFiltered
+  );
+
+  $("reportSort")?.addEventListener(
+    "change",
+    renderFiltered
+  );
+
+  $("refreshReportsBtn")?.addEventListener(
+    "click",
+    ()=>navigate("reports")
+  );
+
+  renderFiltered();
+}
+
+function renderReportRecords(records){
+
+  const root = $("reportsTable");
+
+  if(!root){
+    return;
+  }
+
+  if(records.length === 0){
+
+    root.innerHTML = emptyMarkup(
+      "▤",
+      "No reports available.",
+      "Submitted reports will appear here."
+    );
+
+    return;
+  }
+
+  root.innerHTML = `
+
+    <div class="table-wrap">
+
+      <table class="table">
+
+        <thead>
+          <tr>
+            <th>Report ID</th>
+            <th>User</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          ${records.map(item=>`
+
+            <tr>
+
+              <td>
+                <div class="primary-text">
+                  ${escapeHTML(item.id)}
+                </div>
+              </td>
+
+              <td>
+                <div class="truncate">
+                  ${escapeHTML(
+                    item.userId ||
+                    item.uid ||
+                    "Not available"
+                  )}
+                </div>
+              </td>
+
+              <td>
+                ${escapeHTML(
+                  item.type ||
+                  item.reportType ||
+                  "Not available"
+                )}
+              </td>
+
+              <td>
+                <div class="truncate">
+                  ${escapeHTML(
+                    item.description ||
+                    item.message ||
+                    "Not available"
+                  )}
+                </div>
+              </td>
+
+              <td>
+                ${statusBadge(
+                  item.status || "pending"
+                )}
+              </td>
+
+              <td>
+                ${escapeHTML(
+                  formatDate(
+                    item.createdAt ||
+                    item.timestamp
+                  )
+                )}
+              </td>
+
+              <td>
+
+                <div class="action-row">
+
+                  <button
+                    class="icon-btn"
+                    title="View"
+                    data-report-view="${escapeHTML(item.uid)}::${escapeHTML(item.id)}">
+                    👁
+                  </button>
+
+                  <button
+                    class="icon-btn"
+                    title="Edit"
+                    data-report-edit="${escapeHTML(item.uid)}::${escapeHTML(item.id)}">
+                    ✎
+                  </button>
+
+                  <button
+                    class="icon-btn"
+                    title="Delete"
+                    data-report-delete="${escapeHTML(item.uid)}::${escapeHTML(item.id)}">
+                    ×
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          `).join("")}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <div class="mobile-list">
+
+      ${records.map(item=>`
+
+        <div class="mobile-record">
+
+          <div class="mobile-record-head">
+
+            <div class="mobile-record-title">
+              ${escapeHTML(item.id)}
+            </div>
+
+            ${statusBadge(item.status || "pending")}
+
+          </div>
+
+          <div class="mobile-record-meta">
+
+            <div>
+              <div class="meta-label">User</div>
+              <div class="meta-value">
+                ${escapeHTML(
+                  item.userId ||
+                  item.uid ||
+                  "Not available"
+                )}
+              </div>
+            </div>
+
+            <div>
+              <div class="meta-label">Type</div>
+              <div class="meta-value">
+                ${escapeHTML(
+                  item.type ||
+                  item.reportType ||
+                  "Not available"
+                )}
+              </div>
+            </div>
+
+            <div>
+              <div class="meta-label">Created</div>
+              <div class="meta-value">
+                ${escapeHTML(
+                  formatDate(
+                    item.createdAt ||
+                    item.timestamp
+                  )
+                )}
+              </div>
+            </div>
+
+          </div>
+
+          <div style="margin-top:12px;font-size:12px;line-height:1.5;">
+            ${escapeHTML(
+              item.description ||
+              item.message ||
+              "Not available"
+            )}
+          </div>
+
+          <div class="mobile-record-actions">
+
+            <button
+              class="btn btn-secondary"
+              data-report-view="${escapeHTML(item.uid)}::${escapeHTML(item.id)}">
+              View
+            </button>
+
+            <button
+              class="btn btn-secondary"
+              data-report-edit="${escapeHTML(item.uid)}::${escapeHTML(item.id)}">
+              Edit
+            </button>
+
+            <button
+              class="btn btn-danger"
+              data-report-delete="${escapeHTML(item.uid)}::${escapeHTML(item.id)}">
+              Delete
+            </button>
+
+          </div>
+
+        </div>
+
+      `).join("")}
+
+    </div>
+
+  `;
+
+  root.querySelectorAll("[data-report-view]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const [uid,id] = btn.dataset.reportView.split("::");
+
+      const item = state.reports.find(
+        x=>x.uid === uid && x.id === id
+      );
+
+      if(item){
+        openRecordView("Report",item);
+      }
+    });
+  });
+
+  root.querySelectorAll("[data-report-edit]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const [uid,id] = btn.dataset.reportEdit.split("::");
+
+      const item = state.reports.find(
+        x=>x.uid === uid && x.id === id
+      );
+
+      if(item){
+        openReportModal(item);
+      }
+    });
+  });
+
+  root.querySelectorAll("[data-report-delete]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const [uid,id] = btn.dataset.reportDelete.split("::");
+
+      const item = state.reports.find(
+        x=>x.uid === uid && x.id === id
+      );
+
+      if(item){
+
+        confirmDelete(
+          "Delete this report?",
+          "This action cannot be undone.",
+          async()=>{
+
+            await FirebaseService.deleteReport(item);
+
+            await FirebaseService.logActivity(
+              "Report deleted",
+              {
+                uid:item.uid,
+                reportId:item.id
+              }
+            );
+
+            toast(
+              "Report deleted",
+              "success"
+            );
+
+            await navigate("reports");
+
+          }
+        );
+
+      }
+
+    });
+  });
+}
+
+/* =========================================================
+   REPORT MODAL
+========================================================= */
+
+function openReportModal(item){
+
+  openModal(
+    "Update Report",
+    `
+
+      <form id="reportForm">
+
+        <div class="field">
+
+          <label>Status</label>
+
+          <select id="reportStatusEdit">
+
+            <option value="pending"
+              ${String(item.status || "").toLowerCase() === "pending" ? "selected" : ""}>
+              Pending
+            </option>
+
+            <option value="reviewing"
+              ${String(item.status || "").toLowerCase() === "reviewing" ? "selected" : ""}>
+              Reviewing
+            </option>
+
+            <option value="resolved"
+              ${String(item.status || "").toLowerCase() === "resolved" ? "selected" : ""}>
+              Resolved
+            </option>
+
+            <option value="rejected"
+              ${String(item.status || "").toLowerCase() === "rejected" ? "selected" : ""}>
+              Rejected
+            </option>
+
+          </select>
+
+        </div>
+
+        <div class="field">
+
+          <label>Admin response</label>
+
+          <textarea
+            id="reportResponse"
+            maxlength="20000"
+            placeholder="Optional admin response">${escapeHTML(
+              item.adminResponse ||
+              item.response ||
+              ""
+            )}</textarea>
+
+        </div>
+
+        <div class="field">
+
+          <label>Report description</label>
+
+          <textarea
+            readonly>${escapeHTML(
+              item.description ||
+              item.message ||
+              "Not available"
+            )}</textarea>
+
+        </div>
+
+        <div id="reportFormError" class="auth-error hidden"></div>
+
+        <div class="modal-footer">
+
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-close-modal>
+            Cancel
+          </button>
+
+          <button
+            id="saveReportBtn"
+            type="submit"
+            class="btn btn-primary">
+            Update Report
+          </button>
+
+        </div>
+
+      </form>
+
+    `
+  );
+
+  $("reportForm").addEventListener(
+    "submit",
+    async event=>{
+
+      event.preventDefault();
+
+      const btn = $("saveReportBtn");
+      const errorBox = $("reportFormError");
+
+      btn.disabled = true;
+      btn.textContent = "Updating...";
+      errorBox.classList.add("hidden");
+
+      try{
+
+        const status =
+          $("reportStatusEdit").value;
+
+        const adminResponse =
+          $("reportResponse").value.trim();
+
+        if(![
+          "pending",
+          "reviewing",
+          "resolved",
+          "rejected"
+        ].includes(status)){
+          throw new Error("Invalid report status.");
+        }
+
+        await FirebaseService.updateReport(
+          item,
+          {
+            status,
+            adminResponse
+          }
+        );
+
+        await FirebaseService.logActivity(
+          "Report status changed",
+          {
+            uid:item.uid,
+            reportId:item.id,
+            status
+          }
+        );
+
+        toast(
+          "Report status updated",
+          "success"
+        );
+
+        closeModal();
+
+        await navigate("reports");
+
+      }catch(error){
+
+        console.error(
+          "Report update failed:",
+          error
+        );
+
+        errorBox.textContent =
+          humanError(error);
+
+        errorBox.classList.remove("hidden");
+
+      }finally{
+
+        btn.disabled = false;
+        btn.textContent = "Update Report";
+
+      }
+
+    }
+  );
+}
+
+/* =========================================================
+   USERS
+========================================================= */
+
+function renderUsers(){
+
+  content.innerHTML = `
+
+    <div class="section-header">
+
+      <div>
+        <h1>Users</h1>
+        <p>
+          View and manage user records stored in Realtime Database.
+        </p>
+      </div>
+
+      <div class="section-actions">
+
+        <button
+          id="refreshUsersBtn"
+          class="btn btn-secondary">
+          Refresh
+        </button>
+
+      </div>
+
+    </div>
+
+    <section class="card">
+
+      <div class="toolbar">
+
+        <div class="search">
+
+          <span class="search-icon">⌕</span>
+
+          <input
+            id="userSearch"
+            placeholder="Search name, email or UID..."
+            autocomplete="off">
+
+        </div>
+
+        <select id="userStatusFilter">
+
+          <option value="all">All users</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+
+        </select>
+
+      </div>
+
+      <div id="usersTable"></div>
+
+    </section>
+
+  `;
+
+  const renderFiltered = ()=>{
+
+    const search =
+      $("userSearch")?.value.trim().toLowerCase() || "";
+
+    const status =
+      $("userStatusFilter")?.value || "all";
+
+    let records = state.users.filter(user=>{
+
+      const searchable = [
+        user.id,
+        user.uid,
+        user.email,
+        user.name,
+        user.displayName,
+        user.phone
+      ]
+      .map(safeString)
+      .join(" ")
+      .toLowerCase();
+
+      if(search && !searchable.includes(search)){
+        return false;
+      }
+
+      if(status !== "all"){
+
+        const current =
+          String(
+            user.status ||
+            (
+              user.active === false ||
+              user.isActive === false
+                ? "inactive"
+                : "active"
+            )
+          ).toLowerCase();
+
+        if(current !== status){
+          return false;
+        }
+
+      }
+
+      return true;
+
+    });
+
+    records.sort(
+      (a,b)=>
+        normalizeTimestamp(b) -
+        normalizeTimestamp(a)
+    );
+
+    renderUserRecords(records);
+
+  };
+
+  $("userSearch")?.addEventListener(
+    "input",
+    debounce(renderFiltered,180)
+  );
+
+  $("userStatusFilter")?.addEventListener(
+    "change",
+    renderFiltered
+  );
+
+  $("refreshUsersBtn")?.addEventListener(
+    "click",
+    ()=>navigate("users")
+  );
+
+  renderFiltered();
+}
+
+function renderUserRecords(records){
+
+  const root = $("usersTable");
+
+  if(records.length === 0){
+
+    root.innerHTML = emptyMarkup(
+      "♙",
+      "No users found.",
+      "Users stored in the configured Firebase path will appear here."
+    );
+
+    return;
+  }
+
+  root.innerHTML = `
+
+    <div class="table-wrap">
+
+      <table class="table">
+
+        <thead>
+
+          <tr>
+            <th>User</th>
+            <th>Email</th>
+            <th>UID</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Last Active</th>
+            <th></th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          ${records.map(user=>{
+
+            const active =
+              user.status ||
+              (
+                user.active === false ||
+                user.isActive === false
+                  ? "inactive"
+                  : "active"
+              );
+
+            return `
+
+              <tr>
+
+                <td>
+                  <div class="primary-text">
+                    ${escapeHTML(
+                      user.name ||
+                      user.displayName ||
+                      "Not available"
+                    )}
+                  </div>
+                </td>
+
+                <td>
+                  ${escapeHTML(
+                    user.email ||
+                    "Not available"
+                  )}
+                </td>
+
+                <td>
+                  <div class="truncate">
+                    ${escapeHTML(user.id)}
+                  </div>
+                </td>
+
+                <td>
+                  ${statusBadge(active)}
+                </td>
+
+                <td>
+                  ${escapeHTML(
+                    formatDate(
+                      user.createdAt ||
+                      user.created_at
+                    )
+                  )}
+                </td>
+
+                <td>
+                  ${escapeHTML(
+                    formatDate(
+                      user.lastActive ||
+                      user.lastActivity ||
+                      user.lastSignIn
+                    )
+                  )}
+                </td>
+
+                <td>
+
+                  <div class="action-row">
+
+                    <button
+                      class="icon-btn"
+                      title="View"
+                      data-user-view="${escapeHTML(user.id)}">
+                      👁
+                    </button>
+
+                    <button
+                      class="icon-btn"
+                      title="Edit"
+                      data-user-edit="${escapeHTML(user.id)}">
+                      ✎
+                    </button>
+
+                    <button
+                      class="icon-btn"
+                      title="Delete user data"
+                      data-user-delete="${escapeHTML(user.id)}">
+                      ×
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            `;
+
+          }).join("")}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <div class="mobile-list">
+
+      ${records.map(user=>{
+
+        const active =
+          user.status ||
+          (
+            user.active === false ||
+            user.isActive === false
+              ? "inactive"
+              : "active"
+          );
+
+        return `
+
+          <div class="mobile-record">
+
+            <div class="mobile-record-head">
+
+              <div class="mobile-record-title">
+                ${escapeHTML(
+                  user.name ||
+                  user.displayName ||
+                  "Not available"
+                )}
+              </div>
+
+              ${statusBadge(active)}
+
+            </div>
+
+            <div class="mobile-record-meta">
+
+              <div>
+                <div class="meta-label">Email</div>
+                <div class="meta-value">
+                  ${escapeHTML(
+                    user.email ||
+                    "Not available"
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <div class="meta-label">UID</div>
+                <div class="meta-value">
+                  ${escapeHTML(user.id)}
+                </div>
+              </div>
+
+              <div>
+                <div class="meta-label">Created</div>
+                <div class="meta-value">
+                  ${escapeHTML(
+                    formatDate(
+                      user.createdAt ||
+                      user.created_at
+                    )
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <div class="meta-label">Last Active</div>
+                <div class="meta-value">
+                  ${escapeHTML(
+                    formatDate(
+                      user.lastActive ||
+                      user.lastActivity ||
+                      user.lastSignIn
+                    )
+                  )}
+                </div>
+              </div>
+
+            </div>
+
+            <div class="mobile-record-actions">
+
+              <button
+                class="btn btn-secondary"
+                data-user-view="${escapeHTML(user.id)}">
+                View
+              </button>
+
+              <button
+                class="btn btn-secondary"
+                data-user-edit="${escapeHTML(user.id)}">
+                Edit
+              </button>
+
+              <button
+                class="btn btn-danger"
+                data-user-delete="${escapeHTML(user.id)}">
+                Delete
+              </button>
+
+            </div>
+
+          </div>
+
+        `;
+
+      }).join("")}
+
+    </div>
+
+  `;
+
+  root.querySelectorAll("[data-user-view]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const user = state.users.find(
+        x=>x.id === btn.dataset.userView
+      );
+
+      if(user){
+        openRecordView(
+          "User Profile",
+          user
+        );
+      }
+    });
+  });
+
+  root.querySelectorAll("[data-user-edit]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const user = state.users.find(
+        x=>x.id === btn.dataset.userEdit
+      );
+
+      if(user){
+        openUserEditModal(user);
+      }
+    });
+  });
+
+  root.querySelectorAll("[data-user-delete]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const user = state.users.find(
+        x=>x.id === btn.dataset.userDelete
+      );
+
+      if(user){
+
+        confirmDelete(
+          "Delete this user's database data?",
+          "This removes the user's Realtime Database record. It does not delete the Firebase Authentication account.",
+          async()=>{
+
+            await FirebaseService.deleteUser(user);
+
+            await FirebaseService.logActivity(
+              "User database data deleted",
+              {
+                uid:user.id
+              }
+            );
+
+            toast(
+              "User database data deleted",
+              "success"
+            );
+
+            await navigate("users");
+
+          }
+        );
+
+      }
+    });
+  });
+}
+
+/* =========================================================
+   USER EDIT
+========================================================= */
+
+function openUserEditModal(user){
+
+  const editableKeys = [
+    "name",
+    "displayName",
+    "email",
+    "phone",
+    "status"
+  ];
+
+  const existingFields =
+    editableKeys.filter(
+      key=>Object.prototype.hasOwnProperty.call(user,key)
+    );
+
+  const fields =
+    existingFields.length
+      ? existingFields
+      : ["name","email","phone","status"];
+
+  openModal(
+    "Edit User",
+    `
+
+      <form id="userForm">
+
+        ${fields.map(key=>`
+
+          <div class="field">
+
+            <label for="user_${escapeHTML(key)}">
+              ${escapeHTML(
+                key
+                  .replace(/([A-Z])/g," $1")
+                  .replace(/^./,
+                    char=>char.toUpperCase()
+                  )
+              )}
+            </label>
+
+            ${
+              key === "status"
+              ? `
+                <select id="user_${escapeHTML(key)}">
+
+                  <option
+                    value="active"
+                    ${String(user[key] || "").toLowerCase() === "active" ? "selected" : ""}>
+                    Active
+                  </option>
+
+                  <option
+                    value="inactive"
+                    ${String(user[key] || "").toLowerCase() === "inactive" ? "selected" : ""}>
+                    Inactive
+                  </option>
+
+                </select>
+              `
+              : `
+                <input
+                  id="user_${escapeHTML(key)}"
+                  value="${escapeHTML(user[key] || "")}"
+                  maxlength="1000">
+              `
+            }
+
+          </div>
+
+        `).join("")}
+
+        <div id="userFormError" class="auth-error hidden"></div>
+
+        <div class="modal-footer">
+
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-close-modal>
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            id="saveUserBtn"
+            class="btn btn-primary">
+            Save Changes
+          </button>
+
+        </div>
+
+      </form>
+
+    `
+  );
+
+  $("userForm").addEventListener(
+    "submit",
+    async event=>{
+
+      event.preventDefault();
+
+      const btn = $("saveUserBtn");
+      const errorBox = $("userFormError");
+
+      btn.disabled = true;
+      btn.textContent = "Saving...";
+      errorBox.classList.add("hidden");
+
+      try{
+
+        const updates = {};
+
+        fields.forEach(key=>{
+          updates[key] =
+            $(`user_${key}`).value.trim();
+        });
+
+        if(updates.email){
+
+          const validEmail =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+              .test(updates.email);
+
+          if(!validEmail){
+            throw new Error(
+              "Please enter a valid email address."
+            );
+          }
+
+        }
+
+        await FirebaseService.updateUser(
+          user,
+          updates
+        );
+
+        await FirebaseService.logActivity(
+          "User updated",
+          {
+            uid:user.id
+          }
+        );
+
+        toast(
+          "User updated successfully",
+          "success"
+        );
+
+        closeModal();
+
+        await navigate("users");
+
+      }catch(error){
+
+        console.error(
+          "User update failed:",
+          error
+        );
+
+        errorBox.textContent =
+          humanError(error);
+
+        errorBox.classList.remove("hidden");
+
+      }finally{
+
+        btn.disabled = false;
+        btn.textContent = "Save Changes";
+
+      }
+
+    }
+  );
+}
+
+/* =========================================================
+   ACTIVITY
+========================================================= */
+
+function renderActivity(){
+
+  content.innerHTML = `
+
+    <div class="section-header">
+
+      <div>
+        <h1>Activity</h1>
+        <p>
+          Administrator actions recorded in Firebase.
+        </p>
+      </div>
+
+      <div class="section-actions">
+
+        <button
+          id="refreshActivityBtn"
+          class="btn btn-secondary">
+          Refresh
+        </button>
+
+      </div>
+
+    </div>
+
+    <section class="card card-padding">
+
+      ${activityMarkup(100)}
+
+    </section>
+
+  `;
+
+  $("refreshActivityBtn")?.addEventListener(
+    "click",
+    ()=>navigate("activity")
+  );
+}
+
+function activityMarkup(limit=8){
+
+  const records =
+    state.activity
+      .slice(0,limit);
+
+  if(records.length === 0){
+
+    return emptyMarkup(
+      "◷",
+      "No activity yet.",
+      "Administrator actions will appear here."
+    );
+
+  }
+
+  return `
+
+    <div class="activity-list">
+
+      ${records.map(item=>`
+
+        <div class="activity-item">
+
+          <div class="activity-dot"></div>
+
+          <div>
+
+            <div class="activity-text">
+
+              <strong>
+                ${escapeHTML(
+                  item.action ||
+                  "Dashboard activity"
+                )}
+              </strong>
+
+              ${
+                item.adminEmail
+                  ? ` by ${escapeHTML(item.adminEmail)}`
+                  : ""
+              }
+
+            </div>
+
+            <div class="activity-time">
+
+              ${escapeHTML(
+                formatDate(
+                  item.createdAt ||
+                  item.timestamp
+                )
+              )}
+
+            </div>
+
+          </div>
+
+        </div>
+
+      `).join("")}
+
+    </div>
+
+  `;
+}
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+function renderSettings(){
+
+  const config = loadConfig() || {
+    firebaseConfig:null,
+    paths:DEFAULT_PATHS,
+    backendApiUrl:""
+  };
+
+  content.innerHTML = `
+
+    <div class="section-header">
+
+      <div>
+        <h1>Settings</h1>
+        <p>
+          Configure dashboard services and local preferences.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="settings-grid">
+
+      <section class="card settings-card">
+
+        <h3>Firebase Configuration</h3>
+
+        <p>
+          Firebase Web configuration is stored locally in this
+          browser. No Admin SDK private credentials are stored.
+        </p>
+
+        <div class="config-status">
+
+          <strong>Status:</strong>
+
+          ${
+            config.firebaseConfig
+              ? " Configured"
+              : " Not configured"
+          }
+
+        </div>
+
+        <div class="field">
+
+          <label>Firebase Web Config JSON</label>
+
+          <textarea
+            id="settingsFirebaseConfig"
+            spellcheck="false"
+            autocomplete="off"
+            placeholder='Paste Firebase Web config JSON'>${config.firebaseConfig ? escapeHTML(JSON.stringify(config.firebaseConfig,null,2)) : ""}</textarea>
+
+        </div>
+
+        <button
+          id="saveFirebaseSettingsBtn"
+          class="btn btn-primary">
+          Save Firebase Configuration
+        </button>
+
+      </section>
+
+      <section class="card settings-card">
+
+        <h3>Backend Configuration</h3>
+
+        <p>
+          The backend Worker URL is not embedded in source code.
+          It is stored locally in this browser.
+        </p>
+
+        <div class="config-status">
+
+          <strong>Status:</strong>
+
+          ${
+            config.backendApiUrl
+              ? " Configured"
+              : " Not configured"
+          }
+
+        </div>
+
+        <div class="field">
+
+          <label>Backend API URL</label>
+
+          <input
+            id="settingsBackendUrl"
+            type="url"
+            value="${escapeHTML(config.backendApiUrl || "")}"
+            placeholder="https://your-worker.workers.dev">
+
+        </div>
+
+        <div class="section-actions">
+
+          <button
+            id="saveBackendSettingsBtn"
+            class="btn btn-primary">
+            Save Configuration
+          </button>
+
+          <button
+            id="testBackendBtn"
+            class="btn btn-secondary">
+            Test Connection
+          </button>
+
+          <button
+            id="clearBackendBtn"
+            class="btn btn-danger">
+            Clear
+          </button>
+
+        </div>
+
+      </section>
+
+      <section class="card settings-card">
+
+        <h3>Realtime Database Paths</h3>
+
+        <p>
+          These paths match the current Jinendra Vani structure.
+          Change only if your database schema changes.
+        </p>
+
+        <div class="field">
+
+          <label>Users</label>
+
+          <input
+            id="settingsUsersPath"
+            value="${escapeHTML(config.paths?.users || "users")}">
+
+        </div>
+
+        <div class="field">
+
+          <label>Spiritual Questions</label>
+
+          <input
+            id="settingsQuestionsPath"
+            value="${escapeHTML(config.paths?.questions || "spiritual_queries")}">
+
+        </div>
+
+        <div class="field">
+
+          <label>Reports</label>
+
+          <input
+            id="settingsReportsPath"
+            value="${escapeHTML(config.paths?.reports || "reports")}">
+
+        </div>
+
+        <div class="field">
+
+          <label>Activity</label>
+
+          <input
+            id="settingsActivityPath"
+            value="${escapeHTML(config.paths?.activity || "activity")}">
+
+        </div>
+
+        <button
+          id="savePathsBtn"
+          class="btn btn-primary">
+          Save Database Paths
+        </button>
+
+      </section>
+
+      <section class="card settings-card">
+
+        <h3>Appearance</h3>
+
+        <p>
+          Theme preference is persisted locally.
+        </p>
+
+        <div class="field">
+
+          <label>Theme</label>
+
+          <select id="themeSelect">
+
+            <option value="system">System</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+
+          </select>
+
+        </div>
+
+        <button
+          id="saveThemeBtn"
+          class="btn btn-secondary">
+          Save Theme
+        </button>
+
+      </section>
+
+      <section class="card settings-card">
+
+        <h3>Local Configuration</h3>
+
+        <p>
+          Clearing configuration removes Firebase configuration,
+          database paths and backend URL from this browser only.
+        </p>
+
+        <button
+          id="clearAllConfigBtn"
+          class="btn btn-danger">
+          Clear All Local Configuration
+        </button>
+
+      </section>
+
+    </div>
+
+  `;
+
+  $("themeSelect").value =
+    localStorage.getItem(THEME_KEY) || "system";
+
+  $("saveFirebaseSettingsBtn")?.addEventListener(
+    "click",
+    async()=>{
+
+      try{
+
+        const parsed =
+          parseFirebaseConfig(
+            $("settingsFirebaseConfig").value.trim()
+          );
+
+        const current = loadConfig() || {};
+
+        saveConfig(
+          normalizeConfig({
+            ...current,
+            firebaseConfig:parsed
+          })
+        );
+
+        toast(
+          "Firebase configuration saved",
+          "success"
+        );
+
+        await initializeFirebase(
+          normalizeConfig(loadConfig())
+        );
+
+        await startAuth();
+
+      }catch(error){
+
+        console.error(
+          "Firebase settings failed:",
+          error
+        );
+
+        toast(
+          humanError(error),
+          "error"
+        );
+
+      }
+
+    }
+  );
+
+  $("saveBackendSettingsBtn")?.addEventListener(
+    "click",
+    ()=>{
+
+      const value =
+        $("settingsBackendUrl").value.trim();
+
+      if(!validateBackendURL(value)){
+
+        toast(
+          "Please enter a valid HTTP/HTTPS URL.",
+          "error"
+        );
+
+        return;
+      }
+
+      const current =
+        loadConfig() || {};
+
+      saveConfig(
+        normalizeConfig({
+          ...current,
+          backendApiUrl:value
+        })
+      );
+
+      toast(
+        "Backend configuration saved",
+        "success"
+      );
+
+      renderSettings();
+
+    }
+  );
+
+  $("clearBackendBtn")?.addEventListener(
+    "click",
+    ()=>{
+
+      const current =
+        loadConfig() || {};
+
+      saveConfig(
+        normalizeConfig({
+          ...current,
+          backendApiUrl:""
+        })
+      );
+
+      toast(
+        "Backend URL cleared",
+        "success"
+      );
+
+      renderSettings();
+
+    }
+  );
+
+  $("testBackendBtn")?.addEventListener(
+    "click",
+    testBackendConnection
+  );
+
+  $("savePathsBtn")?.addEventListener(
+    "click",
+    ()=>{
+
+      const current =
+        loadConfig() || {};
+
+      saveConfig(
+        normalizeConfig({
+          ...current,
+          paths:{
+            users:$("settingsUsersPath").value.trim(),
+            questions:$("settingsQuestionsPath").value.trim(),
+            reports:$("settingsReportsPath").value.trim(),
+            activity:$("settingsActivityPath").value.trim()
+          }
+        })
+      );
+
+      toast(
+        "Database paths saved",
+        "success"
+      );
+
+    }
+  );
+
+  $("saveThemeBtn")?.addEventListener(
+    "click",
+    ()=>{
+
+      localStorage.setItem(
+        THEME_KEY,
+        $("themeSelect").value
+      );
+
+      applyTheme();
+
+      toast(
+        "Theme saved",
+        "success"
+      );
+
+    }
+  );
+
+  $("clearAllConfigBtn")?.addEventListener(
+    "click",
+    ()=>{
+
+      confirmDelete(
+        "Clear all local configuration?",
+        "Firebase configuration, database paths and backend URL will be removed from this browser.",
+        async()=>{
+
+          clearConfig();
+
+          try{
+            if(currentUser){
+              await signOut(auth);
+            }
+          }catch(error){
+            console.warn(error);
+          }
+
+          location.reload();
+
+        }
+      );
+
+    }
+  );
+
+}
+
+/* =========================================================
+   BACKEND API CLIENT
+========================================================= */
+
+const APIClient = {
+
+  getBaseURL(){
+
+    const config = loadConfig();
+
+    const value =
+      config?.backendApiUrl?.trim() || "";
+
+    if(!value){
+      throw new Error(
+        "Backend API is not configured."
+      );
+    }
+
+    if(!validateBackendURL(value)){
+      throw new Error(
+        "Backend API URL is invalid."
+      );
+    }
+
+    return value.replace(/\/+$/,"");
+  },
+
+  async request(
+    path,
+    options={},
+    timeout=12000
+  ){
+
+    const baseURL =
+      this.getBaseURL();
+
+    if(!isOnline()){
+      throw new Error(
+        "You are offline."
+      );
+    }
+
+    const controller =
+      new AbortController();
+
+    const timer =
+      setTimeout(
+        ()=>controller.abort(),
+        timeout
+      );
+
+    try{
+
+      const response =
+        await fetch(
+          `${baseURL}/${String(path).replace(/^\/+/,"")}`,
+          {
+            ...options,
+            signal:controller.signal,
+            headers:{
+              "Accept":"application/json",
+              ...(options.headers || {})
+            }
+          }
+        );
+
+      const text =
+        await response.text();
+
+      let data = null;
+
+      if(text){
+
+        try{
+          data = JSON.parse(text);
+        }catch{
+          throw new Error(
+            "Backend returned malformed JSON."
+          );
+        }
+
+      }
+
+      if(!response.ok){
+
+        const message =
+          data?.message ||
+          data?.error ||
+          `Backend request failed (${response.status}).`;
+
+        throw new Error(message);
+      }
+
+      return data;
+
+    }catch(error){
+
+      if(error?.name === "AbortError"){
+        throw new Error(
+          "Backend request timed out."
+        );
+      }
+
+      throw error;
+
+    }finally{
+
+      clearTimeout(timer);
+
+    }
+
+  }
+
+};
+
+/* =========================================================
+   BACKEND TEST
+========================================================= */
+
+async function testBackendConnection(){
+
+  const btn = $("testBackendBtn");
+
+  if(!btn){
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "Testing...";
+
+  try{
+
+    const config =
+      loadConfig();
+
+    if(!config?.backendApiUrl){
+      throw new Error(
+        "Backend API URL is not configured."
+      );
+    }
+
+    /*
+      This deliberately tries a lightweight root request.
+      Your Worker can expose /health or /.
+      No secret headers are added.
+    */
+
+    await APIClient.request(
+      "health",
+      {
+        method:"GET"
+      },
+      8000
+    );
+
+    toast(
+      "Backend connection successful",
+      "success"
+    );
+
+  }catch(error){
+
+    console.error(
+      "Backend connection test failed:",
+      error
+    );
+
+    toast(
+      `Backend connection failed: ${humanError(error)}`,
+      "error"
+    );
+
+  }finally{
+
+    btn.disabled = false;
+    btn.textContent = "Test Connection";
+
+  }
+
+}
+
+/* =========================================================
+   RECORD VIEW
+========================================================= */
+
+function openRecordView(title,record){
+
+  const keys =
+    Object.keys(record || {})
+      .filter(key=>key !== "__proto__");
+
+  const rows =
+    keys.map(key=>`
+
+      <div style="
+        padding:12px 0;
+        border-bottom:1px solid var(--border);
+      ">
+
+        <div style="
+          font-size:10px;
+          color:var(--muted);
+          text-transform:uppercase;
+          letter-spacing:.7px;
+          font-weight:800;
+          margin-bottom:5px;
+        ">
+          ${escapeHTML(key)}
+        </div>
+
+        <pre style="
+          margin:0;
+          white-space:pre-wrap;
+          word-break:break-word;
+          font-family:inherit;
+          font-size:12px;
+          line-height:1.5;
+          color:var(--text);
+        ">${escapeHTML(formatValue(record[key]))}</pre>
+
+      </div>
+
+    `).join("");
+
+  openModal(
+    title,
+    `
+
+      <div>
+
+        ${rows || `
+          <div class="empty">
+            No data available.
+          </div>
+        `}
+
+      </div>
+
+      <div class="modal-footer">
+
+        <button
+          class="btn btn-secondary"
+          data-close-modal>
+          Close
+        </button>
+
+      </div>
+
+    `
+  );
+
+}
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+function openModal(title,body){
+
+  modalRoot.innerHTML = `
+
+    <div class="modal-backdrop" role="dialog" aria-modal="true">
+
+      <div class="modal">
+
+        <div class="modal-header">
+
+          <div class="modal-title">
+            ${escapeHTML(title)}
+          </div>
+
+          <button
+            class="icon-btn"
+            data-close-modal
+            aria-label="Close">
+            ×
+          </button>
+
+        </div>
+
+        <div class="modal-body">
+          ${body}
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+  modalRoot
+    .querySelectorAll("[data-close-modal]")
+    .forEach(btn=>{
+      btn.addEventListener(
+        "click",
+        closeModal
+      );
+    });
+
+  const backdrop =
+    modalRoot.querySelector(".modal-backdrop");
+
+  backdrop?.addEventListener(
+    "click",
+    event=>{
+      if(event.target === backdrop){
+        closeModal();
+      }
+    }
+  );
+
+  document.addEventListener(
+    "keydown",
+    handleModalEscape,
+    {once:true}
+  );
+
+}
+
+function handleModalEscape(event){
+
+  if(event.key === "Escape"){
+    closeModal();
+  }
+
+}
+
+function closeModal(){
+  modalRoot.innerHTML = "";
+}
+
+/* =========================================================
+   CONFIRMATION
+========================================================= */
+
+function confirmDelete(title,message,onConfirm){
+
+  openModal(
+    title,
+    `
+
+      <div class="confirm-modal">
+
+        <div class="confirm-icon">
+          !
+        </div>
+
+        <p style="
+          margin:0;
+          color:var(--muted);
+          font-size:13px;
+          line-height:1.55;
+        ">
+          ${escapeHTML(message)}
+        </p>
+
+      </div>
+
+      <div class="modal-footer">
+
+        <button
+          class="btn btn-secondary"
+          data-close-modal>
+          Cancel
+        </button>
+
+        <button
+          id="confirmDangerBtn"
+          class="btn btn-danger">
+          Delete
+        </button>
+
+      </div>
+
+    `
+  );
+
+  $("confirmDangerBtn")?.addEventListener(
+    "click",
+    async()=>{
+
+      const btn =
+        $("confirmDangerBtn");
+
+      btn.disabled = true;
+      btn.textContent = "Deleting...";
+
+      try{
+
+        await onConfirm();
+
+      }catch(error){
+
+        console.error(
+          "Destructive action failed:",
+          error
+        );
+
+        toast(
+          humanError(error),
+          "error"
+        );
+
+        btn.disabled = false;
+        btn.textContent = "Delete";
+
+      }
+
+    }
+  );
+
+}
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function statusBadge(status){
+
+  const normalized =
+    String(status || "unknown")
+      .toLowerCase();
+
+  let cls = "badge-neutral";
+
+  if(
+    normalized === "active" ||
+    normalized === "resolved"
+  ){
+    cls = "badge-success";
+  }
+
+  if(normalized === "inactive" ||
+     normalized === "rejected"){
+    cls = "badge-rejected";
+  }
+
+  if(normalized === "pending"){
+    cls = "badge-pending";
+  }
+
+  if(normalized === "reviewing"){
+    cls = "badge-reviewing";
+  }
+
+  if(cls === "badge-success"){
+    return `
+      <span class="badge badge-resolved">
+        ${escapeHTML(status)}
+      </span>
+    `;
+  }
+
+  return `
+    <span class="badge ${cls}">
+      ${escapeHTML(status)}
+    </span>
+  `;
+}
+
+function emptyMarkup(icon,title,message){
+
+  return `
+
+    <div class="empty">
+
+      <div class="empty-icon">
+        ${escapeHTML(icon)}
+      </div>
+
+      <div class="empty-title">
+        ${escapeHTML(title)}
+      </div>
+
+      <div>
+        ${escapeHTML(message)}
+      </div>
+
+    </div>
+
+  `;
+}
+
+function humanError(error){
+
+  if(!error){
+    return "Something went wrong.";
+  }
+
+  const code =
+    String(error.code || "");
+
+  if(code.includes("permission-denied")){
+    return "Permission denied. Check Firebase Authentication and Security Rules.";
+  }
+
+  if(code.includes("network-request-failed")){
+    return "Network request failed. Check your internet connection.";
+  }
+
+  if(code.includes("invalid-credential")){
+    return "Email or password is incorrect.";
+  }
+
+  if(code.includes("user-not-found")){
+    return "No Firebase user was found with this email.";
+  }
+
+  if(code.includes("wrong-password")){
+    return "Email or password is incorrect.";
+  }
+
+  if(code.includes("too-many-requests")){
+    return "Too many attempts. Please wait and try again.";
+  }
+
+  if(error.message){
+    return error.message;
+  }
+
+  return "An unexpected error occurred.";
+}
+
+/* =========================================================
+   DRAWER
+========================================================= */
+
+function openDrawer(){
+
+  $("sidebar")?.classList.add("open");
+  $("drawerBackdrop")?.classList.add("open");
+
+}
+
+function closeDrawer(){
+
+  $("sidebar")?.classList.remove("open");
+  $("drawerBackdrop")?.classList.remove("open");
+
+}
+
+/* =========================================================
+   NETWORK
+========================================================= */
+
+function updateNetworkStatus(){
+
+  const online =
+    navigator.onLine;
+
+  $("networkDot")?.classList.toggle(
+    "online",
+    online
+  );
+
+  $("networkDot")?.classList.toggle(
+    "offline",
+    !online
+  );
+
+  $("networkText").textContent =
+    online ? "Online" : "Offline";
+}
+
+window.addEventListener(
+  "online",
+  ()=>{
+    updateNetworkStatus();
+    toast(
+      "Connection restored",
+      "success"
+    );
+  }
+);
+
+window.addEventListener(
+  "offline",
+  ()=>{
+    updateNetworkStatus();
+    toast(
+      "You are offline. Network operations are disabled.",
+      "warning"
+    );
+  }
+);
+
+/* =========================================================
+   AUTH START
+========================================================= */
+
+async function startAuth(){
+
+  if(!auth){
+    throw new Error(
+      "Firebase Authentication is not initialized."
+    );
+  }
+
+  if(unsubscribeAuth){
+    unsubscribeAuth();
+  }
+
+  unsubscribeAuth =
+    onAuthStateChanged(
+      auth,
+      async user=>{
+
+        if(!user){
+
+          currentUser = null;
+
+          dashboardApp.classList.add("hidden");
+          setupScreen.classList.add("hidden");
+          authScreen.classList.remove("hidden");
+
+          hideLoading();
+
+          return;
+        }
+
+        showLoading(
+          "Checking administrator access..."
+        );
+
+        try{
+
+          const admin =
+            await verifyAdmin(user);
+
+          if(!admin){
+
+            await signOut(auth);
+
+            authScreen.classList.remove("hidden");
+            dashboardApp.classList.add("hidden");
+
+            $("authError").textContent =
+              "Access denied. This Firebase account does not have the admin permission.";
+
+            $("authError").classList.remove(
+              "hidden"
+            );
+
+            hideLoading();
+
+            return;
+          }
+
+          currentUser = user;
+
+          $("userEmail").textContent =
+            user.email || "Administrator";
+
+          $("userAvatar").textContent =
+            initials(user.email);
+
+          authScreen.classList.add("hidden");
+          setupScreen.classList.add("hidden");
+          dashboardApp.classList.remove("hidden");
+
+          await loadAllData();
+
+          renderDashboard();
+
+          hideLoading();
+
+        }catch(error){
+
+          console.error(
+            "Authentication initialization failed:",
+            error
+          );
+
+          toast(
+            humanError(error),
+            "error"
+          );
+
+          hideLoading();
+
+        }
+
+      }
+    );
+
+}
+
+/* =========================================================
+   SETUP UI
+========================================================= */
+
+function populateSetup(){
+
+  const config =
+    loadConfig();
+
+  if(!config){
+    return;
+  }
+
+  if(config.firebaseConfig){
+
+    $("firebaseConfigInput").value =
+      JSON.stringify(
+        config.firebaseConfig,
+        null,
+        2
+      );
+
+  }
+
+  $("usersPathInput").value =
+    config.paths?.users ||
+    DEFAULT_PATHS.users;
+
+  $("questionsPathInput").value =
+    config.paths?.questions ||
+    DEFAULT_PATHS.questions;
+
+  $("reportsPathInput").value =
+    config.paths?.reports ||
+    DEFAULT_PATHS.reports;
+
+  $("activityPathInput").value =
+    config.paths?.activity ||
+    DEFAULT_PATHS.activity;
+
+  $("backendUrlInput").value =
+    config.backendApiUrl || "";
+
+}
+
+/* =========================================================
+   INITIAL SETUP SAVE
+========================================================= */
+
+$("saveSetupBtn").addEventListener(
+  "click",
+  async()=>{
+
+    const btn =
+      $("saveSetupBtn");
+
+    const errorBox =
+      $("setupError");
+
+    errorBox.classList.add("hidden");
+
+    btn.disabled = true;
+    btn.textContent = "Connecting...";
+
+    try{
+
+      const firebaseConfig =
+        parseFirebaseConfig(
+          $("firebaseConfigInput")
+            .value
+            .trim()
+        );
+
+      const backendApiUrl =
+        $("backendUrlInput")
+          .value
+          .trim();
+
+      if(!validateBackendURL(backendApiUrl)){
+        throw new Error(
+          "Backend API URL must be a valid HTTP/HTTPS URL."
+        );
+      }
+
+      const config =
+        normalizeConfig({
+          firebaseConfig,
+          backendApiUrl,
+          paths:{
+            users:
+              $("usersPathInput").value.trim(),
+
+            questions:
+              $("questionsPathInput").value.trim(),
+
+            reports:
+              $("reportsPathInput").value.trim(),
+
+            activity:
+              $("activityPathInput").value.trim()
+          }
+        });
+
+      saveConfig(config);
+
+      await initializeFirebase(config);
+
+      setupScreen.classList.add("hidden");
+
+      await startAuth();
+
+      toast(
+        "Configuration saved",
+        "success"
+      );
+
+    }catch(error){
+
+      console.error(
+        "Setup failed:",
+        error
+      );
+
+      errorBox.textContent =
+        humanError(error);
+
+      errorBox.classList.remove(
+        "hidden"
+      );
+
+    }finally{
+
+      btn.disabled = false;
+      btn.textContent = "Save & Continue";
+
+    }
+
+  }
+);
+
+/* =========================================================
+   CLEAR SETUP
+========================================================= */
+
+$("clearSetupBtn").addEventListener(
+  "click",
+  ()=>{
+
+    confirmDelete(
+      "Clear local configuration?",
+      "This removes Firebase configuration, paths and backend URL from this browser.",
+      async()=>{
+
+        clearConfig();
+        location.reload();
+
+      }
+    );
+
+  }
+);
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+$("loginForm").addEventListener(
+  "submit",
+  async event=>{
+
+    event.preventDefault();
+
+    const btn =
+      $("loginBtn");
+
+    const errorBox =
+      $("authError");
+
+    errorBox.classList.add("hidden");
+
+    btn.disabled = true;
+    btn.textContent = "Signing in...";
+
+    try{
+
+      const email =
+        $("loginEmail").value.trim();
+
+      const password =
+        $("loginPassword").value;
+
+      if(!email){
+        throw new Error(
+          "Email is required."
+        );
+      }
+
+      if(!password){
+        throw new Error(
+          "Password is required."
+        );
+      }
+
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+    }catch(error){
+
+      console.error(
+        "Login failed:",
+        error
+      );
+
+      errorBox.textContent =
+        humanError(error);
+
+      errorBox.classList.remove(
+        "hidden"
+      );
+
+    }finally{
+
+      btn.disabled = false;
+      btn.textContent = "Sign In";
+
+    }
+
+  }
+);
+
+/* =========================================================
+   FORGOT PASSWORD
+========================================================= */
+
+$("forgotPasswordBtn").addEventListener(
+  "click",
+  async()=>{
+
+    const email =
+      $("loginEmail").value.trim();
+
+    if(!email){
+
+      toast(
+        "Enter your email address first.",
+        "warning"
+      );
+
+      $("loginEmail").focus();
+
+      return;
+    }
+
+    try{
+
+      await sendPasswordResetEmail(
+        auth,
+        email
+      );
+
+      toast(
+        "Password reset email sent.",
+        "success"
+      );
+
+    }catch(error){
+
+      console.error(
+        "Password reset failed:",
+        error
+      );
+
+      toast(
+        humanError(error),
+        "error"
+      );
+
+    }
+
+  }
+);
+
+/* =========================================================
+   AUTH CONFIG BUTTON
+========================================================= */
+
+$("openSetupFromAuthBtn").addEventListener(
+  "click",
+  ()=>{
+
+    populateSetup();
+
+    authScreen.classList.add("hidden");
+    setupScreen.classList.remove("hidden");
+
+  }
+);
+
+/* =========================================================
+   NAV EVENTS
+========================================================= */
+
+document
+  .querySelectorAll(".nav-btn[data-page]")
+  .forEach(btn=>{
+
+    btn.addEventListener(
+      "click",
+      ()=>navigate(btn.dataset.page)
+    );
+
+  });
+
+$("mobileMenuBtn").addEventListener(
+  "click",
+  openDrawer
+);
+
+$("drawerBackdrop").addEventListener(
+  "click",
+  closeDrawer
+);
+
+$("sidebarThemeBtn").addEventListener(
+  "click",
+  cycleTheme
+);
+
+$("sidebarLogoutBtn").addEventListener(
+  "click",
+  async()=>{
+
+    try{
+
+      await signOut(auth);
+
+      toast(
+        "Signed out successfully",
+        "success"
+      );
+
+    }catch(error){
+
+      console.error(
+        "Logout failed:",
+        error
+      );
+
+      toast(
+        humanError(error),
+        "error"
+      );
+
+    }
+
+  }
+);
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+async function boot(){
+
+  applyTheme();
+  updateNetworkStatus();
+
+  const config =
+    loadConfig();
+
+  if(!config?.firebaseConfig){
+
+    populateSetup();
+
+    setupScreen.classList.remove(
+      "hidden"
+    );
+
+    hideLoading();
+
+    return;
+  }
+
+  try{
+
+    showLoading(
+      "Connecting to Firebase..."
+    );
+
+    await initializeFirebase(
+      normalizeConfig(config)
+    );
+
+    await startAuth();
+
+  }catch(error){
+
+    console.error(
+      "Dashboard initialization failed:",
+      error
+    );
+
+    $("setupError").textContent =
+      humanError(error);
+
+    $("setupError").classList.remove(
+      "hidden"
+    );
+
+    setupScreen.classList.remove(
+      "hidden"
+    );
+
+    hideLoading();
+
+  }
+
+}
+
+/* =========================================================
+   SYSTEM THEME CHANGE
+========================================================= */
+
+if(window.matchMedia){
+
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener(
+      "change",
+      ()=>{
+        const saved =
+          localStorage.getItem(
+            THEME_KEY
+          ) || "system";
+
+        if(saved === "system"){
+          applyTheme();
+        }
+      }
+    );
+
+}
+
+/* =========================================================
+   START
+========================================================= */
+
+boot();
+
+</script>
+
 </body>
 </html>
