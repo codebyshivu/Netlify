@@ -65,3 +65,28 @@ Do not weaken production rules to make the UI work. If an operation is denied, f
 ## Production hardening
 
 For a deployed internal admin panel, serve over HTTPS, restrict Firebase Authentication methods to the intended admins, use strong Realtime Database Rules, consider App Check where appropriate, and deploy the Worker with server-side secrets only. The browser should never receive service-account credentials.
+
+
+## Jinendra Vani Firebase Project
+
+The dashboard is preconfigured for the Jinendra Vani Firebase Web app:
+
+- Project ID: `jinendravani-main`
+- Realtime Database: `jinendravani-main-default-rtdb.asia-southeast1.firebasedatabase.app`
+- Web App ID: `1:243718724548:web:0aad8ffdc056b107eca291`
+
+The Firebase Web configuration is not a service-account secret. Never add Firebase Admin SDK credentials, service-account private keys, or Worker/API secrets to the frontend.
+
+The Worker/API URL is intentionally **not** bundled. Configure it under **Settings → Backend Configuration**; it is stored in `localStorage` under `jinendra_vani_dashboard_config`.
+
+### Admin access
+
+The default configuration requires a Firebase custom claim:
+
+```json
+{
+  "admin": true
+}
+```
+
+This claim must be assigned server-side using a trusted environment. Do not attempt to create or modify custom claims from browser JavaScript. Firebase Realtime Database Security Rules must independently enforce the same authorization boundary.
