@@ -90,3 +90,8 @@ The default configuration requires a Firebase custom claim:
 ```
 
 This claim must be assigned server-side using a trusted environment. Do not attempt to create or modify custom claims from browser JavaScript. Firebase Realtime Database Security Rules must independently enforce the same authorization boundary.
+
+
+## Firebase configuration policy
+
+The dashboard source does not contain the Firebase Web API key or any production Firebase configuration. On first launch, enter the Firebase Web config JSON in the setup screen. The complete config is stored locally under `jinendra_vani_dashboard_config` in the current browser. This is a local configuration mechanism, not a security boundary. Never put Firebase Admin service-account credentials, private keys, or backend secrets in the frontend.

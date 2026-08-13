@@ -9,20 +9,10 @@ const QUESTION_STATUSES = ['active', 'draft', 'archived'];
 const REPORT_STATUSES = ['Pending', 'Reviewing', 'Resolved', 'Rejected'];
 const PAGE_SIZE = 20;
 
-// Firebase Web configuration is intentionally included here because these values
-// identify the Firebase project and are not service-account/private credentials.
-// Keep privileged credentials and Worker/API secrets out of this frontend.
-const DEFAULT_FIREBASE_CONFIG = Object.freeze({
-  apiKey: "AIzaSyDE-8lNIwM79vFJnJT9jFDIDIz70HwjeCc",
-  authDomain: "jinendravani-main.firebaseapp.com",
-  databaseURL: "https://jinendravani-main-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "jinendravani-main",
-  storageBucket: "jinendravani-main.firebasestorage.app",
-  messagingSenderId: "243718724548",
-  appId: "1:243718724548:web:0aad8ffdc056b107eca291",
-  measurementId: "G-VQPJX5K602"
-});
-
+// Firebase Web configuration is intentionally NOT embedded in this source file.
+// The administrator enters the Firebase Web config once in the setup screen;
+// it is stored locally in this browser under STORAGE_KEY.
+// Do not place service-account credentials, private keys, or backend secrets here.
 const state = {
   firebaseApp: null,
   auth: null,
@@ -59,9 +49,8 @@ function readConfig() {
 
 function getEffectiveConfig() {
   const stored = readConfig();
-  if (stored?.firebase) return stored;
-  return {
-    firebase: { ...DEFAULT_FIREBASE_CONFIG },
+  return stored || {
+    firebase: null,
     backendUrl: '',
     paths: { ...DEFAULT_PATHS },
     requireAdminClaim: true
@@ -516,15 +505,12 @@ function closeSidebar(){$('sidebar').classList.remove('open');$('sidebarBackdrop
 
 async function boot(){
   initTheme();setNetworkState();bindUI();$('refreshButton').dataset.icon='refresh';
-  let cfg=readConfig();
+  const cfg=readConfig();
   if(!cfg?.firebase){
-    cfg={
-      firebase:{...DEFAULT_FIREBASE_CONFIG},
-      backendUrl:'',
-      paths:{...DEFAULT_PATHS},
-      requireAdminClaim:true
-    };
-    writeConfig(cfg);
+    showSetup();
+    initSetupForm();
+    setGlobalLoader(false);
+    return;
   }
   try{setGlobalLoader(true,'Initializing services…');await FirebaseService.initialize(cfg);setupListeners();showAuth();}catch(error){console.error('Firebase initialization failed:',error);showSetup();initSetupForm();$('setupError').textContent=humanError(error)}finally{setGlobalLoader(false)}
 }
